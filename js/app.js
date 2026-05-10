@@ -405,14 +405,22 @@ ${data.projects.map(p=>`<h3>${p.name}</h3><p style="font-size:13px;margin:4px 0"
   }
 
   // ============ THEME TOGGLE ============
+  // Persist via cookie (localStorage is unavailable in some sandboxed iframes)
+  function readThemeCookie(){
+    const m = document.cookie.match(/(?:^|;\s*)theme=(dark|light)/);
+    return m ? m[1] : null;
+  }
+  function writeThemeCookie(v){
+    try { document.cookie = `theme=${v}; path=/; max-age=31536000; SameSite=Lax`; } catch(_) {}
+  }
   function initTheme(){
-    const saved = localStorage.getItem('theme') || 'dark';
+    const saved = readThemeCookie() || 'dark';
     document.documentElement.setAttribute('data-theme', saved);
     $('#theme-toggle').addEventListener('click', ()=>{
       const cur = document.documentElement.getAttribute('data-theme');
       const next = cur === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
+      writeThemeCookie(next);
     });
   }
 
