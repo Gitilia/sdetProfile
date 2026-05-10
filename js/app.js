@@ -405,7 +405,7 @@ ${data.projects.map(p=>`<h3>${p.name}</h3><p style="font-size:13px;margin:4px 0"
   }
 
   // ============ THEME TOGGLE ============
-  // Persist via cookie (localStorage is unavailable in some sandboxed iframes)
+  // Persist via cookie (sandboxed iframes block other storage APIs)
   function readThemeCookie(){
     const m = document.cookie.match(/(?:^|;\s*)theme=(dark|light)/);
     return m ? m[1] : null;
