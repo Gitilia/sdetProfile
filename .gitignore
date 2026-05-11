@@ -1,0 +1,23 @@
+# Editor
+.vscode/
+.idea/
+.cursor/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+.npm
+
+# QA artifacts
+qa_*.png
+test-results/
+playwright-report/
+
+# Local server / scratch
+.cache/
+tmp/
