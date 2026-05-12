@@ -414,7 +414,7 @@ function renderAbout(){
 
 function renderExperience(){
   return `<div class="block">${
-    PORTFOLIO.experience.map((e,i)=>`
+    PORTFOLIO.experience.map((e)=>`
       <h4>${_esc(e.company)}</h4>
       <p style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-3);margin:2px 0 8px;line-height:1.45">${_esc(e.role)} · ${_esc(e.when)} · ${_esc(e.where)}</p>
       <ul>${e.bullets.map(b=>`<li>${_esc(b)}</li>`).join('')}</ul>

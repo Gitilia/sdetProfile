@@ -394,8 +394,10 @@ test.describe("accessibility", () => {
   });
 
   test("landmark roles are present", async ({ page }) => {
-    await expect(page.locator('[role="banner"]')).toBeVisible();
-    await expect(page.locator('[role="contentinfo"]')).toBeVisible();
+    // <header> and <footer> at the top level expose implicit banner /
+    // contentinfo roles; querying via getByRole picks them up natively.
+    await expect(page.getByRole("banner")).toBeVisible();
+    await expect(page.getByRole("contentinfo")).toBeVisible();
   });
 });
 

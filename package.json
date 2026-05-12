@@ -6,10 +6,28 @@
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "lint": "npm-run-all -p lint:js lint:css lint:html",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:css": "stylelint \"css/**/*.css\"",
+    "lint:css:fix": "stylelint \"css/**/*.css\" --fix",
+    "lint:html": "html-validate index.html",
+    "typecheck": "tsc --noEmit",
+    "check": "npm-run-all -p lint typecheck test"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.52.0",
-    "serve": "^14.2.6"
+    "@types/node": "^25.7.0",
+    "eslint": "^10.3.0",
+    "globals": "^17.6.0",
+    "html-validate": "^11.0.0",
+    "npm-run-all2": "^8.0.4",
+    "serve": "^14.2.6",
+    "stylelint": "^17.11.0",
+    "stylelint-config-standard": "^40.0.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.3"
   }
 }

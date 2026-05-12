@@ -120,6 +120,30 @@ BASE_URL=https://iliadobkin.com npx playwright test
 
 ---
 
+## Lint & quality checks
+
+The site has no build step, but the dev toolchain runs a four-step quality pass on every commit-worthy change. All checks have an npm script and can be run individually.
+
+```bash
+npm run lint        # eslint + stylelint + html-validate, in parallel
+npm run lint:js     # ESLint over js/, scripts/, tests/, *.ts (vanilla JS + TS)
+npm run lint:css    # Stylelint over css/*.css (bug-only ruleset, no style nags)
+npm run lint:html   # html-validate over index.html (a11y, roles, DOCTYPE)
+npm run typecheck   # tsc --noEmit on playwright.config.ts + tests/*.ts
+npm run check       # lint + typecheck + test (the full guardrail set)
+```
+
+Conventions worth knowing:
+
+- **ESLint** uses a flat config (`eslint.config.mjs`) with three scopes — browser globals for `js/`, Node ESM for `scripts/`, and `typescript-eslint` for `tests/` + `*.ts`. `console.warn` / `console.error` are allowed; `console.log` is not.
+- **Stylelint** runs a minimal "bug-only" ruleset (`.stylelintrc.json`) — block-no-empty, no-invalid-hex, function-no-unknown, property-no-unknown, etc. Compact handwritten CSS (single-line rules, `rgba()`, 6-char hex) is intentional and not flagged.
+- **html-validate** (`.htmlvalidate.json`) enforces uppercase DOCTYPE, accessible button names, non-redundant ARIA roles, and valid landmark usage.
+- **tsc** (`tsconfig.json`) runs in `--noEmit` strict mode against the test files — fails fast if a selector signature drifts.
+
+`npm-run-all2` parallelizes the linters for speed (`npm run lint` finishes in ~3s); `npm run check` is the one to wire into a Gitea Actions runner.
+
+---
+
 ## Editing content
 
 **All content lives in [`js/data.js`](js/data.js)** under `window.PORTFOLIO`. Change a title, swap a job, retag a skill — the UI updates automatically because every section is rendered from this single object.

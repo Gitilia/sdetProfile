@@ -21,6 +21,11 @@ playwright-report/
 # Dependencies (test-only)
 node_modules/
 
+# Lint / typecheck caches
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
 # Local server / scratch
 .cache/
 tmp/

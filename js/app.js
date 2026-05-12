@@ -13,7 +13,6 @@
   // Test state: idle | running | passed | skipped
   const state = Object.fromEntries(tests.map(t=>[t.id, { status: t.skip ? 'skipped' : t.fail ? 'failed' : 'idle', runtime:0 }]));
   let isRunningAll = false;
-  let activeTimers = [];
   const headed = () => $('#headed').checked;
   const getWorkers = () => Math.max(1, parseInt($('#workers').value, 10) || 1);
 
@@ -24,7 +23,7 @@
     return m ? m[1] : null;
   }
   function writeSpecCookie(v){
-    try { document.cookie = `spec=${v}; path=/; max-age=31536000; SameSite=Lax`; } catch(_) {}
+    try { document.cookie = `spec=${v}; path=/; max-age=31536000; SameSite=Lax`; } catch { /* cookies disabled */ }
   }
   function getSpec(id){ return specs.find(s => s.id === id) || specs[0]; }
   function specCountFor(id){ return tests.filter(t => t.spec === id).length; }
@@ -122,7 +121,6 @@
       </div>`;
   }
   function refreshTreeRow(id){
-    const t = tests.find(x=>x.id===id);
     const s = state[id];
     const row = $(`.test[data-id="${id}"]`);
     if (!row) return;
@@ -141,7 +139,7 @@
   // chip that expands them inline on click. Keeps the sidebar visual mass
   // small until a visitor needs the full registry.
   const VISIBLE_TAGS = 6;
-  let activeTags = new Set();
+  const activeTags = new Set();
   function renderTagBar(){
     const bar = $('#tag-bar');
     const all = Array.isArray(data.tags) ? data.tags : [];
@@ -628,10 +626,10 @@
   }
   function utf8ByteLength(str){
     if (typeof TextEncoder !== 'undefined') {
-      try { return new TextEncoder().encode(str).length; } catch (_) {}
+      try { return new TextEncoder().encode(str).length; } catch { /* fall through */ }
     }
     try { return encodeURIComponent(str).replace(/%../g, 'x').length; }
-    catch (_) { return str.length * 4; }
+    catch { return str.length * 4; }
   }
 
   /** Resolve list mount (handles older HTML ids + creates a node under `.network-pane` if needed). */
@@ -780,7 +778,7 @@
     return m ? m[1] : null;
   }
   function writeThemeCookie(v){
-    try { document.cookie = `theme=${v}; path=/; max-age=31536000; SameSite=Lax`; } catch(_) {}
+    try { document.cookie = `theme=${v}; path=/; max-age=31536000; SameSite=Lax`; } catch { /* cookies disabled */ }
   }
   function initTheme(){
     const saved = readThemeCookie() || 'dark';
