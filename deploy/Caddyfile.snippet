@@ -1,0 +1,17 @@
+# Replace the existing iliadobkin.com block in your Caddy VM's Caddyfile.
+
+iliadobkin.com {
+	reverse_proxy 10.0.10.124:8080
+
+	header {
+		X-Content-Type-Options    nosniff
+		X-Frame-Options           DENY
+		Referrer-Policy           strict-origin-when-cross-origin
+		Permissions-Policy        "geolocation=(), microphone=(), camera=()"
+		-Server
+	}
+}
+
+www.iliadobkin.com {
+	redir https://iliadobkin.com{uri}
+}

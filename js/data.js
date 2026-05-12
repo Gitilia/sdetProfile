@@ -4,20 +4,21 @@ window.PORTFOLIO = {
     first: "Ilia",
     last: "Dobkin",
     title: "Senior SDET",
-    location: "Toronto, Ontario, Canada",
+    location: "Remote (ET)",
+    workAuth: "Canadian citizen",
     email: "idobkin@gmail.com",
     linkedin: "https://www.linkedin.com/in/idobkin/",
     gitea: "https://git.levkin.ca",
     site: "https://iliadobkin.com",
     blurb:
-      "Senior SDET with 20+ years delivering automation and release confidence for audit/financial software and regulated web (including real-money iGaming). Owns E2E and API test strategy — Playwright, Cypress, Selenium — contract testing against Swagger/OpenAPI, and performance baselines, integrated into CI/CD for fast, reliable feedback.",
+      "Senior SDET with 20+ years in audit/financial software and regulated web, including real-money iGaming. Deep across Playwright, Swagger/OpenAPI contract testing, and performance baselines integrated into CI/CD. I treat automation as a personal discipline as much as a job: scripts, shortcuts, and agents that streamline my day so engineering effort goes where it matters. Strong instinct for stabilizing flaky suites, tightening quality gates, and removing manual regression effort wherever it lives.",
     headline:
-      "Built 300+ Playwright E2E + 250+ API tests; parallel CI runs consistently above ~95% pass rate; manual regression effort cut by ~50%.",
+      "Built 300+ Playwright E2E + 250+ API tests; parallel CI runs consistently above ~90% pass rate; manual regression effort cut by ~50%.",
   },
 
   // Master tag palette — used for the filter bar at top of sidebar
   tags: [
-    "@playwright","@cypress","@selenium","@api","@ci","@docker","@terraform",
+    "@playwright","@cypress","@selenium","@api","@contract","@ci","@docker","@terraform",
     "@cloud","@a11y","@perf","@bdd","@ai","@infra","@leadership"
   ],
 
@@ -79,11 +80,12 @@ window.PORTFOLIO = {
         id: "projects",
         spec: "projects",
         title: 'should showcase self-hosted projects',
-        tags: ["@infra","@ai","@playwright","@docker"],
+        tags: ["@infra","@ai","@playwright","@docker","@api"],
         duration: 680,
         steps: [
           { kind: "ok", title: 'discover proxmox homelab', dur: 120 },
-          { kind: "ok", title: 'validate MCP server',      dur: 80 },
+          { kind: "ok", title: 'load atlas voice agent',   dur: 92 },
+          { kind: "ok", title: 'verify llm council fan-out', dur: 80 },
         ],
         render: renderProjects
       },
@@ -209,16 +211,18 @@ window.PORTFOLIO = {
   experience: [
     {
       company: "Niyasoft Canada Inc.",
-      role: "Senior QA Automation Engineer",
+      role: "Senior Quality Assurance Automation Engineer",
       when: "Aug 2023 – Apr 2026",
       where: "Vaughan, ON · remote · full-time",
+      stack: "Playwright, TypeScript, GitHub Actions, PostgreSQL, GCP",
       bullets: [
-        "Built & maintained 300+ Playwright E2E tests and 250+ API/integration tests plus performance suites for a regulated online-casino platform; coverage spanned happy-path, negative, workflow, page-navigation, and network request/response checks across payments, wallet/cashier, game/lobby, and back-office flows — cutting manual regression effort by ~50%.",
-        "Stabilized the Playwright suite by replacing brittle waits with deterministic patterns and improving environment readiness, keeping daily pass rates consistently above ~95% across parallel CI stages.",
-        "Validated responsible-gaming end-to-end — deposit/loss/session limits, self-exclusion, cooling-off, reality checks — supporting compliance posture across licensed wagering markets.",
-        "Ran compliance-sensitive geo-eligibility scenarios with audit-friendly logging; traceability artifacts available for licensing reviews on demand.",
-        "Optimized GitHub Actions pipelines (regression, functional, component, smoke) with parallelized stages and daily PR cadence on a high-availability real-money stack.",
-        "Monitored GCP metrics and validated PostgreSQL-backed data integrity; prevented sev-1 incidents by catching performance regressions before release."
+        "Built and maintained 300+ Playwright E2E tests and 250+ API/integration tests plus performance suites for a regulated online-casino platform; coverage spanned happy-path, negative, workflow, page-navigation, and network request/response checks across payments, wallet/cashier, game/lobby, and back-office flows — cutting manual regression effort by ~50% and catching regressions earlier in the pipeline.",
+        "Stabilized the Playwright suite by replacing brittle waits with deterministic patterns and improving environment readiness; reduced flaky-test noise and maintained daily pass rates above ~90% across parallel CI stages.",
+        "Validated responsible gaming and player protection end-to-end — deposit/loss/session limits, self-exclusion, cooling-off, reality checks — supporting compliance posture across licensed wagering markets.",
+        "Ran compliance-sensitive scenarios for geo-eligibility with audit-friendly logging; traceability artifacts available for licensing reviews on demand.",
+        "Optimized GitHub Actions pipelines (regression, functional, component, smoke) with parallelized stages and daily PR/review cadence, keeping feedback time short on a high-availability real-money stack.",
+        "Monitored GCP metrics and alerts for API reliability; validated PostgreSQL-backed data integrity and prevented sev-1 incidents by catching performance regressions before release.",
+        "Authored and enforced Swagger/OpenAPI contract tests against backend microservices, catching breaking schema changes before they reached downstream consumers."
       ]
     },
     {
@@ -226,10 +230,11 @@ window.PORTFOLIO = {
       role: "Software Development Engineer in Test (SDET)",
       when: "Jun 2022 – Jul 2023",
       where: "Toronto, ON · remote · contract",
+      stack: "Cypress, JavaScript, Bitbucket CI, Swagger/OpenAPI, Ansible",
       bullets: [
-        "Built Cypress E2E and API suites (Swagger/OpenAPI) from scratch across core product flows; enabled every-commit CI checks and cut manual regression time ~40% per release.",
+        "Built Cypress E2E and API suites (Swagger/OpenAPI) from scratch across core product flows, including shared test data builders and fixture libraries — enabling every-commit CI checks and cutting manual regression time ~40% per release.",
         "Introduced AODA/WCAG accessibility checks (alt text, keyboard nav, contrast) into Bitbucket CI gates, preventing accessibility regressions across web and mobile releases.",
-        "Automated test-environment provisioning with Ansible — disposable, repeatable setups that shortened spin-up and eliminated pre-regression drift.",
+        "Automated test-environment provisioning with Ansible — disposable, repeatable setups that shortened spin-up time and eliminated pre-regression drift.",
         "Partnered with engineering and product on defect triage, risk-based prioritization, and pragmatic quality gates without blocking incremental delivery."
       ]
     },
@@ -238,9 +243,11 @@ window.PORTFOLIO = {
       role: "QA Automation Developer",
       when: "Sep 2021 – May 2022",
       where: "Calgary, AB · remote · contract",
+      stack: "SpecFlow, Gherkin, C#, .NET, Azure, Docker, SQL Server",
       bullets: [
-        "Maintained 3,500+ SpecFlow/Gherkin scenarios with C# in .NET/Azure; owned flaky-test triage and kept daily build stability above ~90%.",
-        "Practiced left-shift QA in a large Agile team — co-authored scenarios with developers early in the sprint, tightening Given/When/Then clarity.",
+        "Mentored developers on testable design and BDD best practices, improving scenario quality and reducing review churn on test PRs.",
+        "Maintained 3,500+ SpecFlow/Gherkin scenarios with C# in .NET/Azure, owning flaky-test triage and keeping daily build stability above ~90% across the suite.",
+        "Caught defects earlier and tightened Given/When/Then clarity by co-authoring scenarios with developers early in the sprint, shortening feedback from story to green build in a large Agile team (left-shift QA).",
         "Stood up Docker-based local and CI-aligned test environments; used SQL Server for data setup, assertions, and traceability across integrated warehouse-automation workflows."
       ]
     },
@@ -249,12 +256,14 @@ window.PORTFOLIO = {
       role: "Senior Software Developer",
       when: "Oct 2020 – Aug 2021",
       where: "Vaughan, ON · remote · contract",
+      stack: "Playwright, GitLab CI/CD, Terraform, AWS S3, Grafana",
       bullets: [
-        "Built reusable Playwright building blocks with deterministic patterns, eliminating arbitrary waits and measurably reducing suite flakiness.",
+        "Built reusable Playwright patterns that replaced arbitrary waits, measurably reducing suite flakiness and stabilizing CI runs.",
         "Audited and refactored legacy test and UI code; documented testing strategy and shared patterns across the team.",
-        "Optimized GitLab CI/CD pipelines; piped test and pipeline metrics into Grafana dashboards for release visibility.",
+        "Optimized GitLab CI/CD pipelines for speed and reliability; piped test and pipeline metrics into Grafana dashboards for release visibility.",
         "Provisioned AWS (S3) environments with Terraform, validated end-to-end, and promoted to dev via the team's release procedure.",
-        "Ongoing: self-hosted infrastructure lab and local-GPU AI assistant under the Levkin brand — see Projects."
+        "Introduced page object patterns and shared utility layer that cut new-test authoring time and improved cross-team consistency.",
+        "Ongoing: self-hosted infrastructure lab and local-GPU AI projects — see Projects section."
       ]
     },
     {
@@ -262,10 +271,10 @@ window.PORTFOLIO = {
       role: "Senior Software Developer",
       when: "Aug 2019 – Aug 2020",
       where: "Calgary, AB · remote · contract",
+      stack: "CaseWare/CaseView, build automation, scripting",
+      earlier: true,
       bullets: [
-        "Owned CaseWare/CaseView template delivery including compliance updates, standards-driven releases, and documentation for internal and client use.",
-        "Reviewed software for improvements and implemented recommendations; collaborated with support on reported issues.",
-        "Automated build and packaging workflows, compressing ~8 hours of manual release effort to under 2 minutes per cycle."
+        "CaseWare/CaseView template delivery with build/packaging scripts that cut release effort from ~8 hours to under 2 minutes."
       ]
     },
     {
@@ -273,9 +282,10 @@ window.PORTFOLIO = {
       role: "Senior Application Developer 2",
       when: "Aug 2017 – Jun 2019",
       where: "Toronto, ON · remote · full-time",
+      stack: "C#, .NET Core, Selenium, Cucumber, Jenkins, Azure DevOps",
+      earlier: true,
       bullets: [
-        "Developed and maintained C#, .NET, .NET Core applications integrating with CaseWare/CaseView; extended with JavaScript where specs required.",
-        "Contributed automation strategy and hands-on Selenium/Cucumber work; managed Jenkins triggers, Cucumber reporting, and Azure DevOps pipelines."
+        ".NET development on CaseWare/CaseView with Selenium/Cucumber automation across Jenkins and Azure DevOps pipelines."
       ]
     },
     {
@@ -283,60 +293,68 @@ window.PORTFOLIO = {
       role: "Software Developer",
       when: "Aug 2006 – Jun 2017",
       where: "Toronto, ON · hybrid · full-time",
+      stack: "C#, .NET, SQL Server, SilkTest, Agile/Scrum",
+      earlier: true,
       bullets: [
-        "Delivered features, defect fixes, and client templates (JavaScript, HTML, YUI, jQuery, CSS) for global financial/audit systems; automated validation with SilkTest.",
-        "Mentored junior developers on conventions, debugging, and code review; built reusable JS libraries; Agile Scrum, Jira, Git."
+        "11 years of feature development, client templates, and SilkTest automation for global audit/financial systems; mentored juniors."
       ]
     },
     {
       company: "ROLI Consulting",
       role: "Web/Application Developer",
       when: "Jan 2001 – Jul 2012",
-      where: "Vaughan, ON · remote · part-time",
+      where: "Vaughan, ON · remote · contract",
+      stack: "Python, Twilio API, multi-stack web",
+      earlier: true,
       bullets: [
-        "Voice broadcasting and SMS service (Python, Twilio API); websites across multiple stacks; technical consulting for nonprofits and SMBs."
-      ]
-    },
-    {
-      company: "Earlier Career — Kaboose · Coutts · EDS/Scotiabank",
-      role: "QA Automation · Java Developer · ETL Co-op",
-      when: "May 2005 – Aug 2006",
-      where: "Toronto, ON",
-      bullets: [
-        "QA automation with QTP/Quality Center, cross-browser and end-to-end testing, and UAT support (Kaboose); Java/J2EE development (Coutts); Informatica ETL co-op on AIX/DB2 (EDS/Scotiabank)."
+        "Voice/SMS broadcasting service plus multi-stack web and technical consulting for nonprofits and SMBs."
       ]
     }
   ],
 
   skills: [
-    { name: "Test automation: Playwright, Cypress, Selenium, SilkTest; UI, API, mobile, cross-browser; POM, BDD", level: 96, tags: ["@playwright","@cypress","@selenium","@bdd","@api"] },
-    { name: "Languages: TypeScript, JavaScript, C#, Python, Java, Bash/Shell", level: 92, tags: [] },
-    { name: "Frameworks & runtimes: .NET (.NET Core, ASP.NET), Node.js, Spring Boot; markup: HTML/CSS", level: 90, tags: [] },
-    { name: "CI/CD & DevOps: GitHub Actions, GitLab, Bitbucket, Jenkins, Azure DevOps; Git, Terraform, Ansible, Docker", level: 92, tags: ["@ci","@docker","@terraform"] },
-    { name: "Cloud & infra: AWS, Azure, GCP; Linux administration, Proxmox, Caddy, TrueNAS", level: 84, tags: ["@cloud","@infra"] },
-    { name: "Observability & performance: Grafana, Prometheus, Sentry, DataDog, Artillery, k6, JMeter", level: 86, tags: ["@perf"] },
-    { name: "Data & domain: PostgreSQL, SQL Server, MySQL, DB2; CaseWare/CaseView, audit & financial software", level: 78, tags: [] },
-    { name: "QA practices: BDD (SpecFlow, Cucumber), API testing (Postman, OpenAPI), accessibility (AODA/WCAG), risk-based testing, flaky-suite stabilization", level: 90, tags: ["@bdd","@a11y","@api"] },
-    { name: "Leadership & collaboration: mentoring, test strategy & docs, partnering with product/engineering on release risk and pragmatic gates", level: 84, tags: ["@leadership"] },
-    { name: "AI & LLM tooling: Cursor, local LLM, MCP servers, Copilot, Claude Code, Perplexity; GenAI-assisted test design", level: 82, tags: ["@ai"] },
-    { name: "Tooling & workflows: code review, trunk-based, feature flags, canary releases, observability-driven debugging", level: 78, tags: ["@ci"] },
+    { name: "**Test automation**: Playwright, Cypress, Selenium, SilkTest; UI, API, mobile, cross-browser; page object model, BDD", level: 96, tags: ["@playwright","@cypress","@selenium","@bdd","@api"] },
+    { name: "**Domains**: regulated iGaming (real-money), audit & financial software, warehouse automation, accessibility-compliant web (AODA/WCAG)", level: 88, tags: ["@a11y"] },
+    { name: "**Languages & frameworks**: TypeScript, JavaScript, C#, .NET, Python, Java, Bash/Shell, Node.js, ASP.NET, Spring Boot, HTML/CSS", level: 92, tags: [] },
+    { name: "**CI/CD & DevOps**: GitHub Actions, GitLab, Bitbucket, Jenkins, Azure DevOps; Git, Terraform, Ansible, Docker, SonarQube, self-hosted runners", level: 92, tags: ["@ci","@docker","@terraform"] },
+    { name: "**Cloud & infra**: AWS (Lambda, S3), Azure, GCP; Linux administration, Proxmox, Caddy, TrueNAS, Vaultwarden", level: 84, tags: ["@cloud","@infra"] },
+    { name: "**Observability & performance**: Grafana, Prometheus, Sentry, DataDog, Artillery, k6, JMeter, metrics & logging", level: 86, tags: ["@perf"] },
+    { name: "**Data & domain**: PostgreSQL, SQL Server, MySQL, DB2, Informatica/ETL", level: 78, tags: [] },
+    { name: "**QA testing types**: unit, integration, regression, smoke, exploratory, load, stress, end-to-end; API testing (Postman); accessibility (AODA/WCAG); contract testing (Swagger/OpenAPI)", level: 90, tags: ["@api","@a11y","@contract","@perf"] },
+    { name: "**QA process**: BDD, risk-based prioritization, defect triage, quality gates, flaky-suite stabilization, shift-left QA, Agile/Scrum, Jira", level: 88, tags: ["@bdd","@leadership"] },
+    { name: "**AI & LLM tooling**: AI-assisted engineering with Cursor and Claude Code; privacy-first local LLM usage; MCP servers and agent-based automation; GenAI-assisted test design and refactors", level: 82, tags: ["@ai"] },
   ],
 
   projects: [
     {
-      name: "Levkin — Self-Hosted Infrastructure Lab",
+      name: "Self-Hosted Infrastructure Lab",
       tags: ["@infra","@docker","@ci"],
-      desc: "Proxmox-based homelab (VMs/LXC) running Gitea + CI runners, Vaultwarden, Vikunja, Uptime Kuma, Mailcow, Listmonk, n8n, SonarQube — provisioned via Ansible with Caddy edge TLS and TrueNAS backups. Full Linux admin: multi-domain DNS, firewall hardening, monitoring, repeatable deploys. Patterns directly informed production DevOps decisions in later roles."
+      stack: "Proxmox, Ansible, Caddy, TrueNAS, Gitea, SonarQube",
+      desc: "Proxmox homelab (VMs/LXC) with Gitea, CI runners, Vaultwarden, Uptime Kuma, Mailcow, SonarQube — Ansible-provisioned, Caddy TLS, TrueNAS backups; patterns directly informed production DevOps decisions."
     },
     {
-      name: "Levkin — Privacy-First Local AI Assistant",
-      tags: ["@ai","@infra"],
-      desc: "Tool-using assistant wired into mail & calendars (triage, drafts, scheduling) on local GPU inference — prompts and context stay on-LAN, no SaaS LLMs. Composable with homelab identity, TLS, secrets, and automation so event-driven workflows hand off without third-party model APIs."
+      name: "sdetProfile — Portfolio as Playwright Report",
+      tags: ["@playwright","@a11y"],
+      stack: "HTML, CSS, vanilla JS, Playwright (tests), ESLint, Stylelint",
+      desc: "Zero-framework personal portfolio styled as a Playwright test runner — sidebar explorer, editor tabs, trace/network/source panels, tag filtering, keyboard shortcuts, and theme cycling (dark/light/WCAG AAA); 37 real Playwright specs verify the live site."
     },
     {
-      name: "Levkin — Playwright MCP Server",
-      tags: ["@ai","@playwright"],
-      desc: "MCP server developers use from Cursor and other MCP-capable assistants while writing Playwright tests — surfaces selectors, fixtures, and in-repo conventions so generated specs stay aligned with team patterns."
+      name: "Atlas — Local Voice Agent",
+      tags: ["@ai","@infra","@playwright"],
+      stack: "Python, MCP, ASR/TTS, local LLM (RTX), Playwright",
+      desc: "Privacy-focused home voice assistant with on-device AI transcription and tool use — Python, local GPU inference, no third-party model APIs; wired into calendar and home automation."
+    },
+    {
+      name: "AtAnyRate — Event-Driven Pricing",
+      tags: ["@playwright","@api","@docker"],
+      stack: "Python, Playwright, Telegram Bot API, Ticketmaster/SeatGeek APIs, Docker",
+      desc: "Python app that identifies Toronto events likely to spike Airbnb demand, sends Telegram alerts, and optionally adjusts nightly prices via Playwright browser automation."
+    },
+    {
+      name: "LLM Council — Multi-Model Chat UI",
+      tags: ["@ai"],
+      stack: "Python, FastAPI, httpx, React, Vite, Ollama/vLLM",
+      desc: "Local web UI that fans each prompt to multiple LLMs and presents side-by-side responses — Python backend, diverse model voting for higher-confidence answers."
     }
   ],
 
@@ -352,7 +370,7 @@ window.PORTFOLIO = {
   metrics: [
     { label: "Playwright E2E tests authored", value: "300+" },
     { label: "API / integration tests",        value: "250+" },
-    { label: "Parallel CI daily pass rate",    value: "≈ 95%+" },
+    { label: "Parallel CI daily pass rate",    value: "≈ 90%+" },
     { label: "Manual regression reduction",    value: "≈ 50%" },
     { label: "SpecFlow scenarios maintained",  value: "3,500+" },
     { label: "Years shipping software",        value: "20+" }
@@ -392,9 +410,10 @@ function _tags(arr){ return `<div class="card__tags">${arr.map(t=>`<span class="
 
 function renderAbout(){
   const p = PORTFOLIO.person;
+  const authSuffix = p.workAuth ? ` · ${_esc(p.workAuth)}` : '';
   return `
     <div class="block">
-      <p><strong>${p.title}</strong> based in ${p.location}.</p>
+      <p><strong>${p.title}</strong> · ${_esc(p.location)}${authSuffix}.</p>
       <p>${p.blurb}</p>
       <p><em style="color:var(--accent);font-style:normal">▸</em> ${p.headline}</p>
       <div class="snippet"><div class="ln">1
@@ -413,12 +432,27 @@ function renderAbout(){
 }
 
 function renderExperience(){
+  const exp = PORTFOLIO.experience;
+  let earlierEmitted = false;
   return `<div class="block">${
-    PORTFOLIO.experience.map((e)=>`
+    exp.map((e)=>{
+      let header = '';
+      if (e.earlier && !earlierEmitted) {
+        earlierEmitted = true;
+        header = `<h4 style="margin-top:18px;letter-spacing:.04em;color:var(--text-3);font-family:var(--font-mono);font-size:12px;text-transform:uppercase">// earlier career — 2001 – 2020</h4>`;
+      }
+      const meta = [e.role, e.when, e.where].filter(Boolean).map(_esc).join(' · ');
+      const stack = e.stack
+        ? `<p style="font-family:var(--font-mono);font-size:11px;color:var(--text-4);margin:0 0 6px;line-height:1.5"><span style="color:var(--accent)">stack:</span> ${_esc(e.stack)}</p>`
+        : '';
+      return `
+      ${header}
       <h4>${_esc(e.company)}</h4>
-      <p style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-3);margin:2px 0 8px;line-height:1.45">${_esc(e.role)} · ${_esc(e.when)} · ${_esc(e.where)}</p>
+      ${meta ? `<p style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-3);margin:2px 0 4px;line-height:1.45">${meta}</p>` : ''}
+      ${stack}
       <ul>${e.bullets.map(b=>`<li>${_esc(b)}</li>`).join('')}</ul>
-    `).join('')
+    `;
+    }).join('')
   }</div>`;
 }
 
@@ -443,6 +477,7 @@ function renderProjects(){
     PORTFOLIO.projects.map(p=>`
       <div class="card">
         <h5>${_esc(p.name)}</h5>
+        ${p.stack ? `<p style="font-family:var(--font-mono);font-size:11px;color:var(--text-4);margin:2px 0 6px"><span style="color:var(--accent)">stack:</span> ${_esc(p.stack)}</p>` : ''}
         <p>${_esc(p.desc)}</p>
         ${_tags(p.tags)}
       </div>`).join('')
@@ -504,7 +539,7 @@ function renderContact(){
     <div class="contact-cell"><label>linkedin</label><a href="${p.linkedin}" target="_blank" rel="noopener">in/idobkin</a></div>
     <div class="contact-cell"><label>gitea (self-hosted)</label><a href="${p.gitea}" target="_blank" rel="noopener">git.levkin.ca</a></div>
     <div class="contact-cell"><label>site</label><a href="${p.site}" target="_blank" rel="noopener">iliadobkin.com</a></div>
-    <div class="contact-cell"><label>location</label>${p.location}</div>
+    <div class="contact-cell"><label>location</label>${_esc(p.location)}${p.workAuth ? ` · ${_esc(p.workAuth)}` : ''}</div>
   </div></div>`;
 }
 

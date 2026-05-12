@@ -310,4 +310,4 @@ MIT. Fork it, restyle it, replace the content with your own. If you ship a varia
 
 ---
 
-**Built by** [Ilia Dobkin](https://www.linkedin.com/in/idobkin/) · Senior SDET · Toronto
+**Built by** [Ilia Dobkin](https://www.linkedin.com/in/idobkin/) · Senior SDET · Remote (ET)
