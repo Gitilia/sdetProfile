@@ -1085,6 +1085,25 @@
     // and --headed; opens on click, closes on outside-click + Escape.
     initOverflowMenu();
 
+    // Swipe left/right on main pane to cycle specs (mobile)
+    (function initSwipeSpecs(){
+      const main = $('.main');
+      if (!main) return;
+      let startX = 0, startY = 0;
+      main.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }, { passive: true });
+      main.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
+        const idx = specs.findIndex(s => s.id === activeSpec);
+        if (dx < 0 && idx < specs.length - 1) activateSpec(specs[idx + 1].id);
+        else if (dx > 0 && idx > 0) activateSpec(specs[idx - 1].id);
+      }, { passive: true });
+    })();
+
     // Friendly nudge: animate the Run All button briefly on first load
     setTimeout(()=> $('#run-all').classList.add('pulse'), 600);
 
