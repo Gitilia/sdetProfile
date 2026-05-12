@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/base.css?v=7" />
+  <link rel="stylesheet" href="css/app.css?v=7" />
 </head>
 <body>
   <!-- ============== TOP BAR ============== -->
@@ -32,18 +32,6 @@
       <span class="crumb"><span class="crumb__sep">/</span> tests <span class="crumb__sep">/</span> <strong>portfolio.spec.ts</strong></span>
     </div>
 
-    <div class="topbar__center">
-      <div class="status-pill" id="status-pill">
-        <span class="dot dot--idle" id="status-dot"></span>
-        <span id="status-text">idle</span>
-        <span class="status-counts">
-          <span class="cnt cnt--pass" title="passed">✓ <em id="cnt-pass">0</em></span>
-          <span class="cnt cnt--fail" title="failed">✗ <em id="cnt-fail">0</em></span>
-          <span class="cnt cnt--skip" title="skipped">⊘ <em id="cnt-skip">0</em></span>
-        </span>
-      </div>
-    </div>
-
     <div class="topbar__right">
       <button class="btn btn--run" id="run-all" title="Run all tests">
         <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 3 L13 8 L4 13 Z" fill="currentColor"/></svg>
@@ -55,12 +43,15 @@
       <button class="btn btn--ghost" id="reset-all" title="Reset">
         <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 3.5a4.5 4.5 0 1 1-4.39 5.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M8 1 L8 5 L4 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <label class="toggle" title="Headed mode (slower animations)">
-        <input type="checkbox" id="headed" />
-        <span>--headed</span>
-      </label>
-      <button class="btn btn--ghost" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+      <button class="btn btn--ghost" id="theme-toggle" title="Toggle theme (T)" aria-label="Toggle theme">
         <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M11 8a3 3 0 1 1-3-3 3 3 0 0 0 3 3z" fill="currentColor"/></svg>
+      </button>
+      <button class="btn btn--ghost" id="kshelp-open" title="Keyboard shortcuts (?)" aria-label="Keyboard shortcuts">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+          <circle cx="8" cy="8" r="6.4" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <path d="M6 6.4c.1-1.2 1-2 2.1-2s2 .8 2 1.9c0 .9-.6 1.4-1.4 1.8-.5.3-.7.6-.7 1.1v.3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <circle cx="8" cy="11.6" r=".75" fill="currentColor"/>
+        </svg>
       </button>
     </div>
   </header>
@@ -85,19 +76,57 @@
       <nav class="tree" id="tree" aria-label="Tests"></nav>
 
       <div class="sidebar__foot">
-        <span>v1.0.0 · 9 tests</span>
+        <span id="sidebar-foot-meta">v1.0.0 · 12 tests</span>
       </div>
     </aside>
 
     <!-- Main Pane -->
     <section class="main" aria-label="Test results">
+      <!-- Editor bar: spec tabs on the left, status pill + overflow menu on the right.
+           The status pill (counts for the active spec) and the small "⋯" menu
+           (workers / headed) used to live in the top bar; they were merged here
+           to slim that strip and keep run state visually anchored to the editor. -->
+      <div class="editor-bar">
+        <div class="editor-strip" id="editor-strip" role="tablist" aria-label="Open spec files"></div>
+        <div class="editor-bar__right">
+          <div class="status-pill" id="status-pill" aria-live="polite">
+            <span class="dot dot--idle" id="status-dot"></span>
+            <span id="status-text">idle</span>
+            <span class="status-counts">
+              <span class="cnt cnt--pass" title="passed">✓ <em id="cnt-pass">0</em></span>
+              <span class="cnt cnt--fail" title="failed">✗ <em id="cnt-fail">0</em></span>
+              <span class="cnt cnt--skip" title="skipped">⊘ <em id="cnt-skip">0</em></span>
+            </span>
+          </div>
+          <div class="overflow" id="overflow">
+            <button class="overflow__btn" id="overflow-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Run options">
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="3.4" cy="8" r="1.3" fill="currentColor"/><circle cx="8" cy="8" r="1.3" fill="currentColor"/><circle cx="12.6" cy="8" r="1.3" fill="currentColor"/></svg>
+            </button>
+            <div class="overflow__menu" id="overflow-menu" role="menu" hidden>
+              <label class="toggle workers" title="Workers — number of tests to run in parallel">
+                <span>--workers=</span>
+                <select id="workers" aria-label="Workers">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="4">4</option>
+                </select>
+              </label>
+              <label class="toggle" title="Headed mode (slower animations)">
+                <input type="checkbox" id="headed" />
+                <span>--headed</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="tabs" role="tablist">
         <button class="tab is-active" data-tab="report" role="tab">Report</button>
         <button class="tab" data-tab="trace" role="tab">Trace</button>
         <button class="tab" data-tab="source" role="tab">Source</button>
+        <button class="tab" data-tab="network" role="tab">Network</button>
         <button class="tab" data-tab="console" role="tab">Console</button>
         <div class="tabs__spacer"></div>
-        <span class="tabs__meta" id="tabs-meta">portfolio.spec.ts · 9 tests</span>
       </div>
 
       <!-- Report -->
@@ -108,6 +137,9 @@
           <p class="hero__sub">Senior SDET · Toronto, ON · <span class="mono">test.describe("portfolio")</span></p>
           <p class="hero__hint">Click the green <span class="kbd">▶</span> next to any test to run it — or press <span class="kbd">Run all</span> above.</p>
         </div>
+        <!-- Tiny run-history banner above the results list. Pulls the eye to
+             dynamic data (e.g. "Last run · 1.4s · 2 passed · 2 pending"). -->
+        <div class="summary-stripe" id="summary-stripe" aria-live="polite"></div>
         <div class="results" id="results"></div>
       </div>
 
@@ -125,6 +157,17 @@
       <!-- Source -->
       <div class="pane" id="pane-source" role="tabpanel">
         <div class="source" id="source"></div>
+      </div>
+
+      <!-- Network (Gitea repos as Playwright-style requests) -->
+      <div class="pane" id="pane-network" role="tabpanel">
+        <div class="network-pane">
+          <div class="network-head">
+            <div class="network-head__title">Network · git.levkin.ca</div>
+            <div class="network-head__meta"><span class="legend"><i class="sw sw--pass"></i> 200</span><span class="legend mono">application/json</span></div>
+          </div>
+          <div class="network-scroll" id="gitea-network" data-repo-list="1"></div>
+        </div>
       </div>
 
       <!-- Console -->
@@ -146,7 +189,20 @@
     <span class="sb__seg sb__seg--accent">Playwright 1.49</span>
   </footer>
 
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+  <!-- ============== KEYBOARD SHORTCUTS OVERLAY ============== -->
+  <div class="kshelp" id="kshelp" hidden role="dialog" aria-modal="true" aria-labelledby="kshelp-title">
+    <div class="kshelp__scrim" id="kshelp-scrim"></div>
+    <div class="kshelp__panel" tabindex="-1">
+      <div class="kshelp__head">
+        <span class="kshelp__title" id="kshelp-title">Keyboard shortcuts</span>
+        <button class="kshelp__close" id="kshelp-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="kshelp__grid" id="kshelp-grid"></div>
+      <div class="kshelp__foot mono"><span class="kbd">?</span> toggles · <span class="kbd">Esc</span> closes</div>
+    </div>
+  </div>
+
+  <script src="js/data.js?v=7"></script>
+  <script src="js/app.js?v=7"></script>
 </body>
 </html>

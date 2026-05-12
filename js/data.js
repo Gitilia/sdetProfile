@@ -6,7 +6,6 @@ window.PORTFOLIO = {
     title: "Senior SDET",
     location: "Toronto, Ontario, Canada",
     email: "idobkin@gmail.com",
-    phone: "+1 (647) 987-2792",
     linkedin: "https://www.linkedin.com/in/idobkin/",
     gitea: "https://git.levkin.ca",
     site: "https://iliadobkin.com",
@@ -22,12 +21,25 @@ window.PORTFOLIO = {
     "@cloud","@a11y","@perf","@bdd","@ai","@infra","@leadership"
   ],
 
+  /**
+   * Open spec files — drive the editor tab strip above the main pane.
+   * Each test below carries a `spec` matching one of these ids, so the
+   * sidebar / report / source can filter by the active spec.
+   */
+  specs: [
+    { id: "portfolio",  file: "portfolio.spec.ts",  describe: "Ilia Dobkin · portfolio" },
+    { id: "projects",   file: "projects.spec.ts",   describe: "Levkin · projects" },
+    { id: "skills",     file: "skills.spec.ts",     describe: "Ilia Dobkin · skills" },
+    { id: "playground", file: "playground.spec.ts", describe: "Ilia Dobkin · playground" },
+  ],
+
   // The "test suite" — each entry maps to a section on the page
   suite: {
     name: "Ilia Dobkin · portfolio",
     tests: [
       {
         id: "about",
+        spec: "portfolio",
         title: 'should introduce Ilia Dobkin',
         tags: ["@playwright","@leadership"],
         duration: 142,
@@ -40,6 +52,7 @@ window.PORTFOLIO = {
       },
       {
         id: "experience",
+        spec: "portfolio",
         title: 'should list senior SDET experience',
         tags: ["@playwright","@api","@ci","@cloud","@leadership"],
         duration: 1280,
@@ -52,6 +65,7 @@ window.PORTFOLIO = {
       },
       {
         id: "skills",
+        spec: "skills",
         title: 'should expose @-tagged skills',
         tags: ["@playwright","@cypress","@selenium","@api","@bdd","@ci","@docker","@terraform","@cloud","@a11y","@perf","@ai"],
         duration: 412,
@@ -63,6 +77,7 @@ window.PORTFOLIO = {
       },
       {
         id: "projects",
+        spec: "projects",
         title: 'should showcase self-hosted projects',
         tags: ["@infra","@ai","@playwright","@docker"],
         duration: 680,
@@ -74,6 +89,7 @@ window.PORTFOLIO = {
       },
       {
         id: "stack",
+        spec: "skills",
         title: 'should describe daily stack',
         tags: ["@docker","@terraform","@infra","@ai"],
         duration: 320,
@@ -85,6 +101,7 @@ window.PORTFOLIO = {
       },
       {
         id: "leadership",
+        spec: "skills",
         title: 'should demonstrate quality leadership',
         tags: ["@leadership","@ci"],
         duration: 220,
@@ -96,6 +113,7 @@ window.PORTFOLIO = {
       },
       {
         id: "metrics",
+        spec: "skills",
         title: 'should report quality KPIs',
         tags: ["@ci","@perf"],
         duration: 96,
@@ -107,6 +125,7 @@ window.PORTFOLIO = {
       },
       {
         id: "resume",
+        spec: "portfolio",
         title: 'should expose downloadable resume',
         tags: ["@playwright"],
         duration: 64,
@@ -118,6 +137,7 @@ window.PORTFOLIO = {
       },
       {
         id: "contact",
+        spec: "portfolio",
         title: 'should accept inbound contact',
         tags: ["@api"],
         duration: 88,
@@ -126,6 +146,62 @@ window.PORTFOLIO = {
           { kind: "ok", title: 'assert reachable',        dur: 40 },
         ],
         render: renderContact
+      },
+      {
+        id: "perf-budget",
+        spec: "portfolio",
+        title: 'should meet performance budget',
+        skip: true,
+        skipReason: "Lighthouse CI not wired — pending infra (see IDEAS.md)",
+        tags: ["@perf","@ci"],
+        duration: 0,
+        steps: [
+          { kind: "skip", title: 'run lighthouse --budget',            dur: 0 },
+          { kind: "skip", title: 'assert LCP < 2.5s',                 dur: 0 },
+          { kind: "skip", title: 'assert CLS < 0.1',                  dur: 0 },
+        ],
+        render: renderPerfBudget
+      },
+      {
+        id: "response-time",
+        spec: "portfolio",
+        title: 'should match expected response time',
+        fail: true,
+        failMessage: `Error: expect(received).toBeLessThan(expected)
+
+  Expected: < 200
+  Received:   347
+
+    at api.spec.ts:42:31
+    → GET /api/v1/repos/ilia/portfolio  347 ms
+    ────────────────────────────────────────
+    Retry 1/2 … 312 ms  ✗
+    Retry 2/2 … 289 ms  ✗
+
+  Threshold: 200 ms · Actual p95: 316 ms
+  Hint: latency spike — possibly cold-start or DNS`,
+        tags: ["@api","@perf"],
+        duration: 0,
+        steps: [
+          { kind: "ok",   title: 'navigate to Gitea API endpoint',  dur: 45 },
+          { kind: "ok",   title: 'send GET /api/v1/repos/ilia/portfolio', dur: 62 },
+          { kind: "ok",   title: 'assert status 200',               dur: 8 },
+          { kind: "fail", title: 'expect(latency).toBeLessThan(200)', dur: 347 },
+        ],
+        render: renderResponseTime
+      },
+      {
+        id: "vibe-check",
+        spec: "playground",
+        title: 'should pass the vibe check',
+        tags: ["@playwright"],
+        duration: 110,
+        steps: [
+          { kind: "info", title: 'await coffee.brew()',          dur: 18 },
+          { kind: "ok",   title: "expect(mood).toBe('☕')",       dur: 32 },
+          { kind: "ok",   title: 'expect(typing).toBeRhythmic',  dur: 60 },
+        ],
+        render: renderVibe
       },
     ]
   },
@@ -234,7 +310,8 @@ window.PORTFOLIO = {
 
   skills: [
     { name: "Test automation: Playwright, Cypress, Selenium, SilkTest; UI, API, mobile, cross-browser; POM, BDD", level: 96, tags: ["@playwright","@cypress","@selenium","@bdd","@api"] },
-    { name: "Languages & frameworks: TypeScript, JavaScript, C#, .NET, Python, Java, Bash, Node.js", level: 92, tags: [] },
+    { name: "Languages: TypeScript, JavaScript, C#, Python, Java, Bash/Shell", level: 92, tags: [] },
+    { name: "Frameworks & runtimes: .NET (.NET Core, ASP.NET), Node.js, Spring Boot; markup: HTML/CSS", level: 90, tags: [] },
     { name: "CI/CD & DevOps: GitHub Actions, GitLab, Bitbucket, Jenkins, Azure DevOps; Git, Terraform, Ansible, Docker", level: 92, tags: ["@ci","@docker","@terraform"] },
     { name: "Cloud & infra: AWS, Azure, GCP; Linux administration, Proxmox, Caddy, TrueNAS", level: 84, tags: ["@cloud","@infra"] },
     { name: "Observability & performance: Grafana, Prometheus, Sentry, DataDog, Artillery, k6, JMeter", level: 86, tags: ["@perf"] },
@@ -279,6 +356,33 @@ window.PORTFOLIO = {
     { label: "Manual regression reduction",    value: "≈ 50%" },
     { label: "SpecFlow scenarios maintained",  value: "3,500+" },
     { label: "Years shipping software",        value: "20+" }
+  ],
+
+  /**
+   * Public repos on git.levkin.ca — descriptions from Gitea API when set,
+   * otherwise first paragraph of README (see scripts/fetch-gitea-repos.mjs).
+   * API lists all 19 repos on one page (explore UI may paginate).
+   */
+  giteaRepos: [
+    { full_name: "ilia/ansible", name: "ansible", html_url: "https://git.levkin.ca/ilia/ansible", language: "Makefile", description: "Ansible automation for development machines, service hosts, and Proxmox-managed guests (LXC-first, with a path for KVM VMs)." },
+    { full_name: "ilia/AtAnyRate", name: "AtAnyRate", html_url: "https://git.levkin.ca/ilia/AtAnyRate", language: "Python", description: "Local Python application that identifies upcoming Toronto events likely to increase Airbnb demand, sends Telegram alerts, and optionally adjusts nightly prices via Playwright automation." },
+    { full_name: "ilia/atlas", name: "atlas", html_url: "https://git.levkin.ca/ilia/atlas", language: "Python", description: "Atlas is a local, privacy-focused home voice agent system — planning, architecture documentation, and kanban tickets for building the system." },
+    { full_name: "ilia/crkl", name: "crkl", html_url: "https://git.levkin.ca/ilia/crkl", language: "Kotlin", description: "Privacy-first Android AI assistant — circle or touch any element on-screen; on-device AI transcribes, summarizes, explains, or drafts responses." },
+    { full_name: "ilia/dotfiles", name: "dotfiles", html_url: "https://git.levkin.ca/ilia/dotfiles", language: "", description: "Dotfiles and shell configuration for dev machines." },
+    { full_name: "ilia/hilitehero", name: "hilitehero", html_url: "https://git.levkin.ca/ilia/hilitehero", language: "Python", description: "Python tool for extracting highlighted text from PDFs with precise ordering and hyphenation handling." },
+    { full_name: "ilia/invoice", name: "invoice", html_url: "https://git.levkin.ca/ilia/invoice", language: "JavaScript", description: "CLI for generating professional PDF invoices from JSON — interactive and non-interactive modes with preview-first workflow." },
+    { full_name: "ilia/Jobber", name: "Jobber", html_url: "https://git.levkin.ca/ilia/Jobber", language: "TypeScript", description: "Self-hosted job search orchestration — discover roles, score fit, draft resumes and cover letters, export PDFs, track email; you submit applications yourself." },
+    { full_name: "ilia/kanban", name: "kanban", html_url: "https://git.levkin.ca/ilia/kanban", language: "", description: "Kanban board project on self-hosted Gitea." },
+    { full_name: "ilia/linkedout", name: "linkedout", html_url: "https://git.levkin.ca/ilia/linkedout", language: "JavaScript", description: "Job market intelligence platform with integrated AI-powered insights — modular architecture for extensibility." },
+    { full_name: "ilia/llm_council", name: "llm_council", html_url: "https://git.levkin.ca/ilia/llm_council", language: "Python", description: "Local web UI like ChatGPT but sends each query to multiple LLMs — your \"LLM council\" votes with diverse models." },
+    { full_name: "ilia/mirror_match", name: "mirror_match", html_url: "https://git.levkin.ca/ilia/mirror_match", language: "TypeScript", description: "Photo guessing game — upload photos, others guess who is in the picture for points. Next.js, PostgreSQL, NextAuth." },
+    { full_name: "ilia/nanobot", name: "nanobot", html_url: "https://git.levkin.ca/ilia/nanobot", language: "Python", description: "Ultra-lightweight personal AI assistant (Python; published on PyPI as nanobot-ai)." },
+    { full_name: "ilia/onboarding", name: "onboarding", html_url: "https://git.levkin.ca/ilia/onboarding", language: "Shell", description: "Developer environment setup — automates 60+ apps and tools plus Git and SSH configuration." },
+    { full_name: "ilia/outreach", name: "outreach", html_url: "https://git.levkin.ca/ilia/outreach", language: "JavaScript", description: "Node.js email outreach for campaigns to law firms — templates, tracking, and tests." },
+    { full_name: "ilia/POTE", name: "POTE", html_url: "https://git.levkin.ca/ilia/POTE", language: "Python", description: "Research-oriented tool for tracking and analyzing public stock trades by government officials." },
+    { full_name: "ilia/profile", name: "profile", html_url: "https://git.levkin.ca/ilia/profile", language: "TypeScript", description: "Profile / personal site — TypeScript." },
+    { full_name: "ilia/punimtag", name: "punimtag", html_url: "https://git.levkin.ca/ilia/punimtag", language: "TypeScript", description: "Modern photo management and facial recognition system." },
+    { full_name: "ilia/resume", name: "resume", html_url: "https://git.levkin.ca/ilia/resume", language: "", description: "Résumé generator based on the best-resume-ever project." }
   ]
 };
 
@@ -311,8 +415,8 @@ function renderAbout(){
 function renderExperience(){
   return `<div class="block">${
     PORTFOLIO.experience.map((e,i)=>`
-      <h4>${_esc(e.company)} <span style="color:var(--text-4);font-weight:400">— ${_esc(e.role)}</span></h4>
-      <p style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-3);margin:2px 0 6px">${_esc(e.when)} · ${_esc(e.where)}</p>
+      <h4>${_esc(e.company)}</h4>
+      <p style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-3);margin:2px 0 8px;line-height:1.45">${_esc(e.role)} · ${_esc(e.when)} · ${_esc(e.where)}</p>
       <ul>${e.bullets.map(b=>`<li>${_esc(b)}</li>`).join('')}</ul>
     `).join('')
   }</div>`;
@@ -342,7 +446,9 @@ function renderProjects(){
         <p>${_esc(p.desc)}</p>
         ${_tags(p.tags)}
       </div>`).join('')
-  }</div></div>`;
+  }</div>
+    <p class="projects-foot">Public code on <a href="https://git.levkin.ca/explore/repos" target="_blank" rel="noopener">git.levkin.ca</a> — open the <button type="button" class="tab-link" data-tab="network">Network</button> tab for an API-style request list.</p>
+  </div>`;
 }
 
 function renderStack(){
@@ -382,12 +488,12 @@ function renderMetrics(){
 
 function renderResume(){
   return `<div class="block">
-    <p>Full PDF resume — generated from this same source of truth.</p>
+    <p>PDF resume — the same file used for applications.</p>
     <div class="cta-row">
       <button class="cta" id="dl-resume">⇩ download resume.pdf</button>
-      <button class="cta cta--ghost" id="print-resume">print()</button>
+      <button class="cta cta--ghost" id="print-resume">open in tab</button>
     </div>
-    <p style="color:var(--text-4);font-size:11.5px;font-family:var(--font-mono);margin-top:10px">// resume renders inline using the print stylesheet — try ⌘P</p>
+    <p style="color:var(--text-4);font-size:11.5px;font-family:var(--font-mono);margin-top:10px">// opens the PDF for viewing or printing from the browser</p>
   </div>`;
 }
 
@@ -395,10 +501,67 @@ function renderContact(){
   const p = PORTFOLIO.person;
   return `<div class="block"><div class="contact-grid">
     <div class="contact-cell"><label>email</label><a href="mailto:${p.email}">${p.email}</a></div>
-    <div class="contact-cell"><label>phone</label>${p.phone}</div>
     <div class="contact-cell"><label>linkedin</label><a href="${p.linkedin}" target="_blank" rel="noopener">in/idobkin</a></div>
     <div class="contact-cell"><label>gitea (self-hosted)</label><a href="${p.gitea}" target="_blank" rel="noopener">git.levkin.ca</a></div>
     <div class="contact-cell"><label>site</label><a href="${p.site}" target="_blank" rel="noopener">iliadobkin.com</a></div>
     <div class="contact-cell"><label>location</label>${p.location}</div>
   </div></div>`;
+}
+
+function renderPerfBudget(){
+  return `<div class="block">
+    <p style="color:var(--skip)">Lighthouse CI not wired — pending infra (see IDEAS.md)</p>
+    <p>Once connected, this test will assert Core Web Vitals on every deploy: LCP&lt;2.5s, CLS&lt;0.1, TBT&lt;200ms.</p>
+  </div>`;
+}
+
+function renderResponseTime(){
+  return `<div class="block">
+    <p>The Gitea API endpoint <code>GET /api/v1/repos/ilia/portfolio</code> exceeded the <strong>200 ms</strong> latency budget three times in a row.</p>
+    <h4>What happened</h4>
+    <ul>
+      <li>Initial request returned in <strong>347 ms</strong> — likely a cold-start on the VPS.</li>
+      <li>Retry 1: <strong>312 ms</strong>, Retry 2: <strong>289 ms</strong> — trending down but still above threshold.</li>
+      <li>The p95 across the three attempts was <strong>316 ms</strong>.</li>
+    </ul>
+    <h4>Possible fixes</h4>
+    <ul>
+      <li>Add a keep-alive cron to prevent cold-starts.</li>
+      <li>Enable response caching on the reverse proxy.</li>
+      <li>Raise the threshold to 350 ms if p50 is acceptable.</li>
+    </ul>
+    <div class="snippet"><div class="ln">1
+2
+3
+4
+5
+6</div><div class="code"><span class="cm">// api.spec.ts:42</span>
+<span class="kw">const</span> res = <span class="kw">await</span> request.get(<span class="str">'/api/v1/repos/ilia/portfolio'</span>);
+<span class="kw">const</span> latency = res.headers[<span class="str">'x-response-time'</span>];
+expect(res.status()).toBe(<span class="num">200</span>);
+expect(Number(latency)).toBeLessThan(<span class="num">200</span>);
+<span class="cm">// ✗ Expected: &lt; 200 · Received: 347</span></div></div>
+  </div>`;
+}
+
+function renderVibe(){
+  return `<div class="block">
+    <p><code>playground.spec.ts</code> is reserved for interactive demos and small experiments — the things that don't quite belong in the resume but make this site fun to poke at.</p>
+    <h4>On the runway</h4>
+    <ul>
+      <li><strong>Real Playwright tests of this site</strong> — meta, self-referential, satisfying. The runner that <em>looks</em> like a Playwright report becomes one that <em>is</em> verified by Playwright.</li>
+      <li><strong>Recording mode</strong> — MediaRecorder API captures a 20s Run-All clip you can drop into Slack.</li>
+      <li><strong>Narrative replay</strong> — click a tag, watch the runner play that storyline end-to-end.</li>
+      <li><strong>Konami easter egg</strong> — because every test runner deserves one.</li>
+    </ul>
+    <div class="snippet"><div class="ln">1
+2
+3
+4
+5</div><div class="code"><span class="cm">// playground.spec.ts</span>
+<span class="kw">test</span>(<span class="str">'should pass the vibe check'</span>, <span class="kw">async</span> ({ page }) =&gt; {
+  <span class="kw">const</span> coffee = <span class="kw">await</span> kitchen.brew();
+  <span class="kw">await</span> expect(coffee.temperature).toBeWithinRange(<span class="num">63</span>, <span class="num">68</span>);
+});</div></div>
+  </div>`;
 }

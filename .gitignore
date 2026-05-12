@@ -18,6 +18,13 @@ qa_*.png
 test-results/
 playwright-report/
 
+# Dependencies (test-only)
+node_modules/
+
 # Local server / scratch
 .cache/
 tmp/
+
+# Stray resume copies (canonical lives in assets/)
+/*.pdf
+!assets/*.pdf

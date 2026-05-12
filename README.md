@@ -2,7 +2,7 @@
 
 > A personal portfolio + resume styled as a **Playwright test runner**. Built by an SDET, for SDETs.
 
-Click the green ▶ next to any test to "run" it — each passing test reveals a portfolio section. Filter by `@tag` chips like a real `--grep`. Includes a career-timeline trace viewer, a Source tab that renders the portfolio as actual-looking Playwright spec code, and a downloadable PDF resume.
+Click the green ▶ next to any test to "run" it — each passing test reveals a portfolio section. Filter by `@tag` chips like a real `--grep`. Includes a career-timeline trace viewer, a Source tab that renders the portfolio as actual-looking Playwright spec code, a **Network** tab that lists public [git.levkin.ca](https://git.levkin.ca/explore/repos) repos as Playwright-style `GET … 200` rows with expandable JSON (descriptions from the Gitea API or each repo's README), and a downloadable PDF resume.
 
 **Live preview:** deploy locally (see below) or open `index.html` directly.
 
@@ -12,15 +12,26 @@ Click the green ▶ next to any test to "run" it — each passing test reveals a
 
 A traditional portfolio doesn't tell a hiring manager you live in test runners all day. This one does — every interaction is a love letter to the tooling SDETs use:
 
-- Sidebar **Test Explorer** with collapsible suite + green run arrows
-- Pass / fail / skip status pill in the top bar with live counts
+- Sidebar **Test Explorer** (400px) with collapsible suites, green run arrows, and tree-view ellipsis for long describe labels
+- **Editor tab strip** (28px, slim) above the report — switch between `portfolio.spec.ts`, `projects.spec.ts`, `skills.spec.ts`, `playground.spec.ts`; each rescopes the explorer, report, source view, and status counts (cookie-persisted)
+- **Status pill** merged into the editor bar with live pass/fail/skip counts per active spec
+- **Overflow menu** (⋯) on the right of the editor tabs with `--workers=` and `--headed` controls
+- **Skipped test** (`should meet performance budget`) with amber ⊘ icon — a 100% green suite looks fake; mixed outcomes feel authentic
 - Progress bars under each test that fill in real time
+- **Auto-run** first test on page load so the hero arrives with body content rendered (runner animation still plays)
+- **Summary stripe** above the results list: `Last run · 1.4s · 4 passed · 1 skipped`
+- **Pending preview** — the first idle test's body is shown expanded with a faded look + "click ▶ to run" overlay
+- **Tag bar** with 6 visible tags + "+N more" expand chip + a `× clear` button
+- **Count bubbles** right-aligned with consistent width, tabular numerals, outlined — reads as "metric" not "tag"
 - VS Code dark+ / Playwright trace viewer palette (Inter + JetBrains Mono)
 - A `Trace` tab that draws your career as a Gantt-style waterfall
-- A `Source` tab that renders the portfolio as a real-looking `.spec.ts` file
+- A `Source` tab that renders the active spec as a real-looking `.spec.ts` file
 - A `Console` tab that logs test run events live
+- A `Network` tab modeled on Playwright's network panel — one row per public Gitea repo (`GET https://git.levkin.ca/api/v1/repos/…`), click to expand the faux JSON body
 - `--headed` toggle that slows animations down for demo mode
-- Cookie-persisted dark / light theme toggle
+- `--workers=` selector for parallel test execution (1, 2, or 4 workers)
+- Cookie-persisted theme cycle: dark → light → high-contrast (WCAG AAA)
+- Keyboard shortcuts (`?` to see all): `R` run all, `X` reset, `T` theme, `/` grep, `1–9` run Nth test
 - Mobile drawer for the test explorer, fully responsive
 
 ---
@@ -29,15 +40,16 @@ A traditional portfolio doesn't tell a hiring manager you live in test runners a
 
 Intentionally zero-framework. The whole point is craftsmanship: hand-rolled HTML, CSS variables, and vanilla JS. Easy to read, easy to fork, deploys anywhere static.
 
-| Layer       | Choice                                    |
-| ----------- | ----------------------------------------- |
-| Markup      | Single `index.html`                       |
-| Styling     | `css/base.css` (tokens) + `css/app.css`   |
-| Behavior    | `js/data.js` (content) + `js/app.js` (UI) |
-| Type        | Inter (sans) + JetBrains Mono (mono)      |
-| Icons / Logo| Hand-written inline SVG                   |
-| Build       | None — open the file                      |
-| Hosting     | Any static host (S3, Netlify, GitHub Pages, your homelab) |
+| Layer        | Choice                                    |
+| ------------ | ----------------------------------------- |
+| Markup       | Single `index.html`                       |
+| Styling      | `css/base.css` (tokens) + `css/app.css`   |
+| Behavior     | `js/data.js` (content) + `js/app.js` (UI) |
+| Type         | Inter (sans) + JetBrains Mono (mono)      |
+| Icons / Logo | Hand-written inline SVG                   |
+| Build        | None — open the file                      |
+| Tests (dev)  | `@playwright/test` against `npx serve`    |
+| Hosting      | Any static host (S3, Netlify, GitHub Pages, your homelab) |
 
 ---
 
@@ -45,17 +57,24 @@ Intentionally zero-framework. The whole point is craftsmanship: hand-rolled HTML
 
 ```
 portfolio/
-├── index.html              # Single-page shell — topbar, sidebar, tabs, statusbar
+├── index.html              # Single-page shell — topbar, editor bar, sidebar, tabs, statusbar
 ├── README.md               # You are here
 ├── IDEAS.md                # Future work, ranked by effort/payoff
+├── package.json            # Dev-only — Playwright test runner
+├── playwright.config.ts    # Playwright config — serves site locally on port 3173
+├── scripts/
+│   └── fetch-gitea-repos.mjs   # Optional: regenerate `giteaRepos` from git.levkin.ca API + READMEs
+├── tests/
+│   └── portfolio.spec.ts   # 37 Playwright specs exercising the live site
 ├── css/
-│   ├── base.css            # Design tokens: colors, type, spacing, dark/light themes
-│   └── app.css             # Component styles: tree, tabs, results, trace, source, etc.
+│   ├── base.css            # Design tokens: colors, type, spacing, dark/light/hc themes
+│   └── app.css             # Component styles: tree, tabs, results, trace, network, source, etc.
 ├── js/
-│   ├── data.js             # All portfolio content — single source of truth
+│   ├── data.js             # All portfolio content — single source of truth (incl. `giteaRepos`)
 │   └── app.js              # Test-runner behavior: tree, run engine, tabs, theme, drawer
 └── assets/
-    └── favicon.svg         # Custom mark
+    ├── favicon.svg
+    └── ilia-dobkin-resume.pdf
 ```
 
 ---
@@ -73,6 +92,34 @@ That's it. No build step, no dependencies. Edit a file, refresh the page.
 
 ---
 
+## Running the Playwright tests
+
+The site that *looks* like a Playwright report is itself tested by real Playwright. The `tests/` directory ships **37 specs across 12 describe blocks** covering smoke checks, the run engine, theme cycling, tab navigation, editor strip switching, grep/tag filtering, keyboard shortcuts, the network panel, accessibility basics, the overflow menu, mobile responsiveness, and a full lifecycle scenario.
+
+```bash
+npm install
+npx playwright install    # downloads browser binaries
+npm test                  # runs against Chromium by default
+```
+
+Useful variants:
+
+```bash
+npm run test:headed       # watch the browser — great for debugging
+npm run test:ui           # Playwright's interactive UI mode
+npm run report            # open the HTML report from the last run
+```
+
+By default the config spins up a local static server on port 3173 (via `npx serve`) and runs Chromium only. Firefox and WebKit projects are present in `playwright.config.ts` — uncomment them to fan out. To test against a deployed URL instead of the local server:
+
+```bash
+BASE_URL=https://iliadobkin.com npx playwright test
+```
+
+> **Note:** `package.json` and `node_modules/` are test-only concerns — the site itself still has zero build step.
+
+---
+
 ## Editing content
 
 **All content lives in [`js/data.js`](js/data.js)** under `window.PORTFOLIO`. Change a title, swap a job, retag a skill — the UI updates automatically because every section is rendered from this single object.
@@ -81,8 +128,16 @@ That's it. No build step, no dependencies. Edit a file, refresh the page.
 window.PORTFOLIO = {
   person: { first: 'Ilia', last: 'Dobkin', /* ... */ },
 
-  // Master tag palette — drives the filter bar
+  // Master tag palette — drives the filter bar (first 6 shown, rest in "+N more")
   tags: ['@playwright', '@cypress', '@api', '@ci', /* ... */],
+
+  // Open .spec.ts files — each becomes a tab in the editor strip
+  specs: [
+    { id: 'portfolio',  file: 'portfolio.spec.ts',  describe: 'Ilia Dobkin · portfolio' },
+    { id: 'projects',   file: 'projects.spec.ts',   describe: 'Levkin · projects' },
+    { id: 'skills',     file: 'skills.spec.ts',     describe: 'Ilia Dobkin · skills' },
+    { id: 'playground', file: 'playground.spec.ts', describe: 'Ilia Dobkin · playground' },
+  ],
 
   // The test suite — each entry maps to one portfolio section
   suite: {
@@ -90,6 +145,7 @@ window.PORTFOLIO = {
     tests: [
       {
         id: 'about',
+        spec: 'portfolio',                // ← which file this test lives in
         title: 'should introduce Ilia Dobkin',
         tags: ['@playwright', '@leadership'],
         duration: 142,
@@ -100,6 +156,14 @@ window.PORTFOLIO = {
         ],
         render: renderAbout, // function that returns the section HTML
       },
+      {
+        id: 'perf-budget',
+        spec: 'portfolio',
+        title: 'should meet performance budget',
+        skip: true,                       // ← amber ⊘ icon, excluded from Run All
+        skipReason: 'Lighthouse CI not wired — pending infra',
+        // ...
+      },
       // ...
     ],
   },
@@ -109,28 +173,50 @@ window.PORTFOLIO = {
   projects:   [ /* name, desc, tags */ ],
   stack:      { Editors: [...], Languages: [...], /* ... */ },
   metrics:    [ /* label / value pairs for the KPI cards */ ],
+  giteaRepos: [ /* full_name, html_url, language, description — Network tab */ ],
 };
 ```
 
 ### Add a new test (section)
 
-1. Add an entry to `PORTFOLIO.suite.tests`.
+1. Add an entry to `PORTFOLIO.suite.tests` — set `spec` to the spec it belongs in (matching one of `PORTFOLIO.specs[].id`).
 2. Write a `render<Name>()` function further down in `data.js` that returns HTML.
-3. Reference it as the `render` property. Done — it appears in the sidebar + report.
+3. Reference it as the `render` property. Done — it appears in the sidebar + report when its spec tab is active.
+
+### Skip a test
+
+Set `skip: true` on the test entry. It will render with the amber ⊘ icon, be excluded from `Run All`, and display its `skipReason` in the body.
+
+### Add a new spec file (tab)
+
+1. Append an entry to `PORTFOLIO.specs` (`{ id, file, describe }`).
+2. Tag any tests into it via the `spec: '<id>'` field.
+
+That's it — a new tab appears in the editor strip with the count badge.
 
 ### Add a new tag
 
-Append to `PORTFOLIO.tags`. To make it filter anything, also add it to the `tags: []` array on the relevant tests.
+Append to `PORTFOLIO.tags`. To make it filter anything, also add it to the `tags: []` array on the relevant tests. Only the first 6 tags are shown by default; the rest hide behind a "+N more" chip.
 
 ### Add an experience entry
 
 Push to `PORTFOLIO.experience`. The Trace tab parses `when` (`"Aug 2023 – Apr 2026"`) automatically and lays it out on the timeline.
 
+### Refresh Gitea repo descriptions
+
+Public repos are listed at [git.levkin.ca/explore/repos](https://git.levkin.ca/explore/repos); the HTTP UI may split results across pages, but the Gitea API returns **all 19 public repos in one `repos/search` response**. To refresh blurbs from live READMEs:
+
+```bash
+node scripts/fetch-gitea-repos.mjs
+```
+
+Copy the printed `giteaRepos: [ … ]` block into `js/data.js` (or merge rows by hand). Descriptions prefer the repo's Gitea `description` field, then the first paragraph of `README.md`.
+
 ---
 
 ## Customizing the look
 
-All design tokens live in [`css/base.css`](css/base.css) as CSS variables, scoped to `:root[data-theme='dark']` and `:root[data-theme='light']`.
+All design tokens live in [`css/base.css`](css/base.css) as CSS variables, scoped to `:root[data-theme='dark']`, `:root[data-theme='light']`, and `:root[data-theme='hc']` (WCAG AAA high-contrast).
 
 **Want a different accent?** Change `--accent` (default `#4ec9b0`, Playwright's signature teal).
 
@@ -150,7 +236,7 @@ Any static host works because there's no build:
 - **Your homelab (Caddy / nginx)** — just serve the directory.
 - **Custom domain (e.g. `iliadobkin.com`)** — point an A/CNAME record at your host.
 
-> Note: the theme toggle persists via a cookie, which works fine on any normal domain. If you embed in a sandboxed iframe that strips cookies, the theme will reset on reload but otherwise works.
+> Note: the theme toggle cycles **dark → light → high-contrast (WCAG AAA)** and persists via a cookie, which works fine on any normal domain. If you embed in a sandboxed iframe that strips cookies, the theme will reset on reload but otherwise works.
 
 ---
 
@@ -159,9 +245,10 @@ Any static host works because there's no build:
 **Render loop is simple and stateless per-test:**
 
 ```
-state[testId] = { status: 'idle' | 'running' | 'passed', runtime: ms }
+state[testId] = { status: 'idle' | 'running' | 'passed' | 'skipped', runtime: ms }
 
 runTest(id)
+  ├─ if test.skip → log warning, bail
   ├─ flip state to 'running'
   ├─ refreshTreeRow + refreshResultRow         (update sidebar + main pane)
   ├─ animate progress bar via requestAnimationFrame
@@ -174,8 +261,13 @@ runTest(id)
 | -------------------------------- | --------------------------------- |
 | What a test looks like inside    | `data.js` — the matching `render*` fn |
 | The order or set of tests        | `data.js` — `PORTFOLIO.suite.tests` |
+| The set of spec files (tabs)     | `data.js` — `PORTFOLIO.specs` (+ `spec` on each test) |
+| The editor bar + overflow menu   | `app.js` — `renderEditorStrip()` / `initOverflowMenu()` |
+| The status pill / summary stripe | `app.js` — `updateStatusbar()` / `updateSummaryStripe()` |
+| The tag bar + clear button       | `app.js` — `renderTagBar()` / `syncTagBarUI()` / `clearTagFilter()` |
 | The trace tab parsing            | `app.js` — `renderTrace()` + `parseMon()` |
 | The fake source code             | `app.js` — `renderSource()`       |
+| The Network / Gitea repo list    | `data.js` — `giteaRepos` + `app.js` — `renderNetwork()` |
 | Run-animation timing             | `app.js` — `runTest()` / `tween()`|
 | Theme colors                     | `base.css` — `:root[data-theme=*]`|
 | Mobile breakpoints               | `app.css` — `@media (max-width: 900px)` |

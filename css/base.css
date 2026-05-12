@@ -88,6 +88,51 @@
   --statusbar-fg: #ffffff;
 }
 
+/* High Contrast — WCAG AAA (every text token ≥ 7:1 against --bg).
+ * Colors picked from the Windows / VS Code HC palette: pure black canvas,
+ * pure-white prose, yellow as the universal accent, lime/red/cyan for
+ * pass/fail/info so the three are still distinguishable for protanopia. */
+:root[data-theme='hc'] {
+  --bg:       #000000;
+  --bg-2:     #000000;
+  --bg-3:     #0a0a0a;
+  --panel:    #000000;
+  --panel-2:  #0a0a0a;
+  --line:     #ffffff;
+  --line-2:   #ffffff;
+  --text:     #ffffff;     /* 21:1 */
+  --text-2:   #ffffff;     /* 21:1 — no muting; AAA prose */
+  --text-3:   #e6e6e6;     /* 18:1 */
+  --text-4:   #c0c0c0;     /* 12.6:1 */
+  --accent:   #ffff00;     /* 19.6:1 — the one yellow */
+  --pass:     #00ff00;     /* 15.3:1 */
+  --pass-2:   #00ff00;
+  --fail:     #ff8585;     /* 9.5:1 */
+  --skip:     #ffd700;     /* 16.4:1 */
+  --info:     #7fd5ff;     /* 11.7:1 */
+  --run:      #00ff00;
+  --selection:#ffff00;     /* paired with black text via override below */
+  --shadow:   0 0 0 1px #ffffff;
+  --hover:    rgba(255,255,255,.18);
+  --active:   rgba(255,255,255,.30);
+  --kbd-bg:   #000000;
+  --tag-bg:   #000000;
+  --tag-fg:   #ffff00;
+  --green-arrow: #00ff00;
+  --topbar-bg: #000000;
+  --statusbar-bg: #ffff00;
+  --statusbar-fg: #000000;
+}
+:root[data-theme='hc'] ::selection { background: #ffff00; color: #000000; }
+
+/* AAA also requires every interactive control to expose a visible focus
+ * indicator; force a 3px yellow outline on every focused element in HC,
+ * overriding the `outline: 0` declarations sprinkled through app.css. */
+:root[data-theme='hc'] :focus-visible {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 2px;
+}
+
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body {

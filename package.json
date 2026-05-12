@@ -1,0 +1,15 @@
+{
+  "name": "portfolio-tests",
+  "private": true,
+  "description": "Playwright tests for iliadobkin.com — the portfolio that looks like a Playwright report, tested by actual Playwright.",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "serve": "^14.2.6"
+  }
+}
