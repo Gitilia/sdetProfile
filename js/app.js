@@ -7,8 +7,7 @@
   const specs = Array.isArray(data.specs) && data.specs.length
     ? data.specs
     : [{ id: 'portfolio', file: 'portfolio.spec.ts', describe: data.suite.name }];
-  /** Canonical resume file (sync with repo `assets/ilia-dobkin-resume.pdf`). */
-  const RESUME_PDF = 'assets/ilia-dobkin-resume.pdf';
+  const RESUME_PDF = 'assets/DobkinResume26.pdf';
 
   // Test state: idle | running | passed | skipped
   const state = Object.fromEntries(tests.map(t=>[t.id, { status: t.skip ? 'skipped' : t.fail ? 'failed' : 'idle', runtime:0 }]));
