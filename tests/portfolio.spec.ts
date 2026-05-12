@@ -419,6 +419,15 @@ test.describe("responsive", () => {
     await page.click("#menu-btn");
     await expect(page.locator("#sidebar")).toHaveClass(/is-open/);
   });
+
+  test("hero subtitle separator is hidden on mobile", async ({ page }) => {
+    await page.goto("/");
+    const sep = page.locator(".hero__sub-sep");
+    await expect(sep).toBeHidden();
+    const sub = page.locator(".hero__sub");
+    await expect(sub).toContainText("Canadian citizen");
+    await expect(sub).toContainText("test.describe");
+  });
 });
 
 // ---------------------------------------------------------------------------

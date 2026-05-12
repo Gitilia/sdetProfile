@@ -846,6 +846,9 @@ body {
   .hero__title { font-size: 32px; }
   .hero__sub { font-size: 12px; word-break: break-word; white-space: normal; }
   .hero__sub .mono { display: block; margin-top: 4px; }
+  /* When .mono drops to its own line, the inline " · " in front of it would
+     dangle as an orphan after "Canadian citizen". Hide it on mobile. */
+  .hero__sub .hero__sub-sep { display: none; }
   .hero__hint { font-size: 12.5px; white-space: normal; word-break: break-word; }
   .hero--slim { padding: 14px 18px 10px; }
   .hero--slim .hero__title { font-size: 20px; }
@@ -909,6 +912,15 @@ body {
   .hero__sub { font-size: 11px; }
   .hero__hint { font-size: 11px; }
   .hero--slim .hero__title { font-size: 18px; }
+
+  /* Tighten the topbar so 5 ghost buttons + brand fit on iPhone-mini widths
+     without horizontal overflow. We keep all controls reachable; just trim
+     their padding and shrink the brand wordmark. */
+  .topbar { gap: 4px; padding: 0 6px; }
+  .topbar__right { gap: 2px; }
+  .btn { padding: 0 6px; }
+  .btn--run { padding: 0 9px; }
+  .brand__name { font-size: 11.5px; }
 
   .trace-row, .trace-axis { grid-template-columns: 80px 1fr 44px; font-size: 10px; }
   .trace-head__meta { display: none; }
