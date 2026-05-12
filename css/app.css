@@ -861,7 +861,8 @@ body {
   .test { min-height: 40px; padding: 6px 10px 6px 22px; }
   .test__run { width: 28px; height: 28px; }
 
-  .snippet { white-space: pre-wrap; word-break: break-word; overflow-x: auto; }
+  .snippet { white-space: pre-wrap; word-break: break-all; overflow-x: auto; }
+  .source__code { white-space: pre-wrap; word-break: break-all; }
 
   .cards { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
@@ -869,7 +870,9 @@ body {
   .skill__bar { width: 100%; }
   .skill__pct { text-align: left; }
 
-  .block p { max-width: none; }
+  .block p { max-width: none; word-wrap: break-word; overflow-wrap: break-word; }
+  .block ul { padding-left: 14px; }
+  .block ul li { word-wrap: break-word; overflow-wrap: break-word; }
   .cta-row { flex-direction: column; }
   .cta { justify-content: center; width: 100%; }
 
