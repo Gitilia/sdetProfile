@@ -1,0 +1,64 @@
+---
+# Homelab CI — Node/pages lane (git-ci-01) + secret scan (git-ci-02)
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  skip-ci-check:
+    runs-on: [homelab, self-hosted, linux]
+    outputs:
+      should-skip: ${{ steps.check.outputs.skip }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - id: check
+        run: |
+          SKIP=0
+          BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
+          MSG="${GITHUB_EVENT_HEAD_COMMIT_MESSAGE:-$(git log -1 --pretty=%B 2>/dev/null || true)}"
+          echo "$BRANCH" "$MSG" | grep -qi '@skipci' && SKIP=1
+          echo "skip=$SKIP" >> $GITHUB_OUTPUT
+
+  node-ci:
+    needs: skip-ci-check
+    if: needs.skip-ci-check.outputs.should-skip != '1'
+    runs-on: [homelab, self-hosted, linux, node]
+    container:
+      image: node:20-bookworm
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: npm ci
+        run: |
+          if [ -f package-lock.json ]; then npm ci; elif [ -f package.json ]; then npm install; else exit 0; fi
+
+      - name: Lint
+        run: npm run lint --if-present
+
+      - name: Test
+        run: npm test --if-present
+
+      - name: Build
+        run: npm run build --if-present
+
+      - name: npm audit (advisory)
+        run: npm audit --audit-level=high || true
+
+  secret-scan:
+    needs: skip-ci-check
+    if: needs.skip-ci-check.outputs.should-skip != '1'
+    runs-on: [homelab, self-hosted, linux, heavy]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Gitleaks
+        run: |
+          docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:latest \
+            detect --source /repo --no-banner --redact
