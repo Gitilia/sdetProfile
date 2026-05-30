@@ -1,5 +1,5 @@
 ---
-# ci-sync: 2026-05-30T01:28:56Z
+# ci-sync: 2026-05-30T01:31:20Z
 # Homelab CI — Node/pages lane (git-ci-01) + secret scan (git-ci-02)
 name: CI
 
