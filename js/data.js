@@ -7,7 +7,7 @@ window.PORTFOLIO = {
     location: "Remote (ET)",
     workAuth: "Canadian citizen",
     email: "idobkin@gmail.com",
-    linkedin: "https://www.linkedin.com/in/idobkin/",
+    linkedin: "https://www.linkedin.com/in/ilia-dobkin-8263343/",
     gitea: "https://git.levkin.ca",
     site: "https://iliadobkin.com",
     blurb:
