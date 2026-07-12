@@ -992,7 +992,7 @@
   const HEROES = {
     portfolio: {
       title: 'Ilia Dobkin',
-      sub:   'Senior SDET · Remote (ET) · Canadian citizen · <span class="mono">test.describe("portfolio")</span>',
+      sub:   'Senior SDET · Remote (ET) · Canadian citizen<span class="hero__sub-sep"> · </span><span class="mono">test.describe("portfolio")</span>',
       hint:  'Click the green <span class="kbd">▶</span> next to any test to run it — or press <span class="kbd">Run all</span> above.',
     },
     projects: {
