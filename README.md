@@ -1,6 +1,8 @@
 # portfolio.spec.ts
 
 > A personal portfolio + resume styled as a **Playwright test runner**. Built by an SDET, for SDETs.
+>
+> Gitea remote: `ilia/sdetProfile` (local folder is usually cloned as `portfolio`).
 
 Click the green ▶ next to any test to "run" it — each passing test reveals a portfolio section. Filter by `@tag` chips like a real `--grep`. Includes a career-timeline trace viewer, a Source tab that renders the portfolio as actual-looking Playwright spec code, a **Network** tab that lists public [git.levkin.ca](https://git.levkin.ca/explore/repos) repos as Playwright-style `GET … 200` rows with expandable JSON (descriptions from the Gitea API or each repo's README), and a downloadable PDF resume.
 
@@ -74,7 +76,7 @@ portfolio/
 │   └── app.js              # Test-runner behavior: tree, run engine, tabs, theme, drawer
 └── assets/
     ├── favicon.svg
-    └── ilia-dobkin-resume.pdf
+    └── DobkinResume26.pdf
 ```
 
 ---
@@ -310,4 +312,4 @@ MIT. Fork it, restyle it, replace the content with your own. If you ship a varia
 
 ---
 
-**Built by** [Ilia Dobkin](https://www.linkedin.com/in/idobkin/) · Senior SDET · Remote (ET)
+**Built by** [Ilia Dobkin](https://www.linkedin.com/in/ilia-dobkin-8263343/) · Senior SDET · Remote (ET)
