@@ -115,7 +115,7 @@ npm run report            # open the HTML report from the last run
 By default the config spins up a local static server on port 3173 (via `npx serve`) and runs Chromium only. Firefox and WebKit projects are present in `playwright.config.ts` — uncomment them to fan out. To test against a deployed URL instead of the local server:
 
 ```bash
-BASE_URL=https://iliadobkin.com npx playwright test
+BASE_URL=https://sdet.levkin.ca npx playwright test
 ```
 
 > **Note:** `package.json` and `node_modules/` are test-only concerns — the site itself still has zero build step.
@@ -260,7 +260,7 @@ Any static host works because there's no build:
 - **GitHub Pages** — push to `gh-pages` branch, point to root.
 - **Netlify / Vercel** — drag-and-drop the folder.
 - **Your homelab (Caddy / nginx)** — just serve the directory.
-- **Custom domain (e.g. `iliadobkin.com`)** — point an A/CNAME record at your host.
+- **Custom domain (e.g. `sdet.levkin.ca`)** — point an A/CNAME record at your host.
 
 > Note: the theme toggle cycles **dark → light → high-contrast (WCAG AAA)** and persists via a cookie, which works fine on any normal domain. If you embed in a sandboxed iframe that strips cookies, the theme will reset on reload but otherwise works.
 

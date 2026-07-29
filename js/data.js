@@ -9,7 +9,7 @@ window.PORTFOLIO = {
     email: "idobkin@gmail.com",
     linkedin: "https://www.linkedin.com/in/ilia-dobkin-8263343/",
     gitea: "https://git.levkin.ca",
-    site: "https://iliadobkin.com",
+    site: "https://sdet.levkin.ca",
     blurb:
       "Senior SDET with 20+ years in audit/financial software and regulated web, including real-money iGaming. Deep across Playwright, Swagger/OpenAPI contract testing, and performance baselines integrated into CI/CD. I treat automation as a personal discipline as much as a job: scripts, shortcuts, and agents that streamline my day so engineering effort goes where it matters. Strong instinct for stabilizing flaky suites, tightening quality gates, and removing manual regression effort wherever it lives.",
     headline:
@@ -538,7 +538,7 @@ function renderContact(){
     <div class="contact-cell"><label>email</label><a href="mailto:${p.email}">${p.email}</a></div>
     <div class="contact-cell"><label>linkedin</label><a href="${p.linkedin}" target="_blank" rel="noopener">in/idobkin</a></div>
     <div class="contact-cell"><label>gitea (self-hosted)</label><a href="${p.gitea}" target="_blank" rel="noopener">git.levkin.ca</a></div>
-    <div class="contact-cell"><label>site</label><a href="${p.site}" target="_blank" rel="noopener">iliadobkin.com</a></div>
+    <div class="contact-cell"><label>site</label><a href="${p.site}" target="_blank" rel="noopener">sdet.levkin.ca</a></div>
     <div class="contact-cell"><label>location</label>${_esc(p.location)}${p.workAuth ? ` · ${_esc(p.workAuth)}` : ''}</div>
   </div></div>`;
 }
