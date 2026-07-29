@@ -1,12 +1,10 @@
-# Replace the existing iliadobkin.com block in your Caddy VM's Caddyfile.
-# Live block (edge 10.0.10.20) as of 2026-07-08 uses the shared `security-headers`
-# snippet instead of a one-off header block, and a permanent (301) www redirect.
+# sdet.levkin.ca — Playwright career portfolio (ilia/sdetProfile) on LXC 219.
+# Apex iliadobkin.com is the personal hub (ilia/portfolio) on the same LXC.
 
-iliadobkin.com {
+sdet.levkin.ca {
 	import security-headers
 	reverse_proxy 10.0.10.106:80
-}
-
-www.iliadobkin.com {
-	redir https://iliadobkin.com{uri} permanent
+	log {
+		output file /var/log/caddy/sdet_access.log
+	}
 }

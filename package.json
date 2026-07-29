@@ -1,7 +1,7 @@
 {
   "name": "portfolio-tests",
   "private": true,
-  "description": "Playwright tests for iliadobkin.com — the portfolio that looks like a Playwright report, tested by actual Playwright.",
+  "description": "Playwright tests for sdet.levkin.ca — the portfolio that looks like a Playwright report, tested by actual Playwright.",
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",

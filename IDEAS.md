@@ -40,7 +40,7 @@ On Projects or Network, pull **live** data from Gitea: latest commit, last push,
 ### 7. Real resume PDF generation
 The current `download resume.pdf` opens a print-styled HTML page. Replace with a true PDF generated server-side (Puppeteer) or client-side (`pdf-lib`, `jsPDF`). Multi-page, properly hyphenated, with embedded fonts.
 
-### 8. Custom domain on `iliadobkin.com`
+### 8. Custom domain on `sdet.levkin.ca`
 - Buy / point domain → static host (S3 + CloudFront, or your Proxmox box behind Caddy)
 - Set up Caddy site block with auto-TLS
 - Add `og:image` (a screenshot of the runner) and `og:title` for nice link previews
@@ -68,7 +68,7 @@ Use the MediaRecorder API to capture a 20-second video of a Run All cycle and of
 
 - [ ] Add 1–2 GIFs or screenshots in this README
 - [ ] Generate `og:image` social card (screenshot the dark hero)
-- [ ] Write a short blog post on `iliadobkin.com/blog` titled "I built my portfolio as a Playwright test runner"
+- [ ] Write a short blog post on `sdet.levkin.ca/blog` titled "I built my portfolio as a Playwright test runner"
 - [ ] Add a "References" test: collapsed quotes from past managers / colleagues, each rendered as a test assertion
 - [ ] Audit color contrast in light theme (WCAG AA minimum)
 - [ ] Test on iOS Safari + Firefox (currently QA'd in Chromium)
