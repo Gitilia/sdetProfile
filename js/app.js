@@ -677,7 +677,7 @@
     }
     const GF = window.PORTFOLIO;
     const repos = GF && Array.isArray(GF.giteaRepos) ? GF.giteaRepos : [];
-    const apiRoot = 'https://git.levkin.ca/api/v1/repos/';
+    const apiRoot = 'https://api.github.com/repos/';
     if (repos.length === 0) {
       wrap.innerHTML = `<div class="network-empty">No <span class="mono">giteaRepos</span> in <span class="mono">js/data.js</span>. Hard refresh the page (<span class="mono">Cmd+Shift+R</span>). If deploying, redeploy after adding the array.</div>`;
       return;
