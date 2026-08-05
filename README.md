@@ -1,42 +1,18 @@
 # portfolio.spec.ts
 
-> A personal portfolio + resume styled as a **Playwright test runner**. Built by an SDET, for SDETs.
->
-> Gitea remote: `ilia/sdetProfile` (local folder is usually cloned as `portfolio`).
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Live](https://img.shields.io/badge/live-sdet.levkin.ca-0a0)](https://sdet.levkin.ca)
 
-Click the green ▶ next to any test to "run" it — each passing test reveals a portfolio section. Filter by `@tag` chips like a real `--grep`. Includes a career-timeline trace viewer, a Source tab that renders the portfolio as actual-looking Playwright spec code, a **Network** tab that lists public [git.levkin.ca](https://git.levkin.ca/explore/repos) repos as Playwright-style `GET … 200` rows with expandable JSON (descriptions from the Gitea API or each repo's README), and a downloadable PDF resume.
+Career portfolio styled as a **Playwright test runner** — sidebar explorer, editor tabs, trace viewer, Network tab, keyboard shortcuts.
 
-**Live preview:** deploy locally (see below) or open `index.html` directly.
-
----
+**Live:** [sdet.levkin.ca](https://sdet.levkin.ca) · **Public mirror:** [github.com/Gitilia/sdetProfile](https://github.com/Gitilia/sdetProfile)
 
 ## Why this exists
 
-A traditional portfolio doesn't tell a hiring manager you live in test runners all day. This one does — every interaction is a love letter to the tooling SDETs use:
-
-- Sidebar **Test Explorer** (400px) with collapsible suites, green run arrows, and tree-view ellipsis for long describe labels
-- **Editor tab strip** (28px, slim) above the report — switch between `portfolio.spec.ts`, `projects.spec.ts`, `skills.spec.ts`, `playground.spec.ts`; each rescopes the explorer, report, source view, and status counts (cookie-persisted)
-- **Status pill** merged into the editor bar with live pass/fail/skip counts per active spec
-- **Overflow menu** (⋯) on the right of the editor tabs with `--workers=` and `--headed` controls
-- **Skipped test** (`should meet performance budget`) with amber ⊘ icon — a 100% green suite looks fake; mixed outcomes feel authentic
-- Progress bars under each test that fill in real time
-- **Auto-run** first test on page load so the hero arrives with body content rendered (runner animation still plays)
-- **Summary stripe** above the results list: `Last run · 1.4s · 4 passed · 1 skipped`
-- **Pending preview** — the first idle test's body is shown expanded with a faded look + "click ▶ to run" overlay
-- **Tag bar** with 6 visible tags + "+N more" expand chip + a `× clear` button
-- **Count bubbles** right-aligned with consistent width, tabular numerals, outlined — reads as "metric" not "tag"
-- VS Code dark+ / Playwright trace viewer palette (Inter + JetBrains Mono)
-- A `Trace` tab that draws your career as a Gantt-style waterfall
-- A `Source` tab that renders the active spec as a real-looking `.spec.ts` file
-- A `Console` tab that logs test run events live
-- A `Network` tab modeled on Playwright's network panel — one row per public Gitea repo (`GET https://git.levkin.ca/api/v1/repos/…`), click to expand the faux JSON body
-- `--headed` toggle that slows animations down for demo mode
-- `--workers=` selector for parallel test execution (1, 2, or 4 workers)
-- Cookie-persisted theme cycle: dark → light → high-contrast (WCAG AAA)
-- Keyboard shortcuts (`?` to see all): `R` run all, `X` reset, `T` theme, `/` grep, `1–9` run Nth test
-- Mobile drawer for the test explorer, fully responsive
-
----
+Hiring managers who work with SDETs already live in test runners. This site uses
+that UI metaphor instead of a generic landing page: sidebar explorer, editor tabs,
+status pill, trace viewer, network panel, and keyboard shortcuts modeled on
+Playwright and VS Code.
 
 ## Stack
 
@@ -308,8 +284,4 @@ See [IDEAS.md](IDEAS.md) for the backlog. Quick wins on top, ambitious experimen
 
 ## License
 
-MIT. Fork it, restyle it, replace the content with your own. If you ship a variation, a wave hello on LinkedIn would be appreciated but is not required.
-
----
-
-**Built by** [Ilia Dobkin](https://www.linkedin.com/in/ilia-dobkin-8263343/) · Senior SDET · Remote (ET)
+MIT — see [LICENSE](LICENSE). Fork and replace the content as you like.
