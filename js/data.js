@@ -8,7 +8,8 @@ window.PORTFOLIO = {
     workAuth: "Canadian citizen",
     email: "idobkin@gmail.com",
     linkedin: "https://www.linkedin.com/in/ilia-dobkin-8263343/",
-    gitea: "https://git.levkin.ca",
+    gitea: "https://github.com/Gitilia",
+    github: "https://github.com/Gitilia",
     site: "https://sdet.levkin.ca",
     blurb:
       "Senior SDET with 20+ years in audit/financial software and regulated web, including real-money iGaming. Deep across Playwright, Swagger/OpenAPI contract testing, and performance baselines integrated into CI/CD. I treat automation as a personal discipline as much as a job: scripts, shortcuts, and agents that streamline my day so engineering effort goes where it matters. Strong instinct for stabilizing flaky suites, tightening quality gates, and removing manual regression effort wherever it lives.",
@@ -185,7 +186,7 @@ window.PORTFOLIO = {
         tags: ["@api","@perf"],
         duration: 0,
         steps: [
-          { kind: "ok",   title: 'navigate to Gitea API endpoint',  dur: 45 },
+          { kind: "ok",   title: 'navigate to GitHub API endpoint',  dur: 45 },
           { kind: "ok",   title: 'send GET /api/v1/repos/ilia/portfolio', dur: 62 },
           { kind: "ok",   title: 'assert status 200',               dur: 8 },
           { kind: "fail", title: 'expect(latency).toBeLessThan(200)', dur: 347 },
@@ -377,30 +378,20 @@ window.PORTFOLIO = {
   ],
 
   /**
-   * Public repos on git.levkin.ca — descriptions from Gitea API when set,
-   * otherwise first paragraph of README (see scripts/fetch-gitea-repos.mjs).
-   * API lists all 19 repos on one page (explore UI may paginate).
+   * Public repos on github.com/Gitilia — mirrored from Gitea for recruiters.
+   * Keep this list to public GitHub only (no private forge links).
    */
   giteaRepos: [
-    { full_name: "ilia/ansible", name: "ansible", html_url: "https://git.levkin.ca/ilia/ansible", language: "Makefile", description: "Ansible automation for development machines, service hosts, and Proxmox-managed guests (LXC-first, with a path for KVM VMs)." },
-    { full_name: "ilia/AtAnyRate", name: "AtAnyRate", html_url: "https://git.levkin.ca/ilia/AtAnyRate", language: "Python", description: "Local Python application that identifies upcoming Toronto events likely to increase Airbnb demand, sends Telegram alerts, and optionally adjusts nightly prices via Playwright automation." },
-    { full_name: "ilia/atlas", name: "atlas", html_url: "https://git.levkin.ca/ilia/atlas", language: "Python", description: "Atlas is a local, privacy-focused home voice agent system — planning, architecture documentation, and kanban tickets for building the system." },
-    { full_name: "ilia/crkl", name: "crkl", html_url: "https://git.levkin.ca/ilia/crkl", language: "Kotlin", description: "Privacy-first Android AI assistant — circle or touch any element on-screen; on-device AI transcribes, summarizes, explains, or drafts responses." },
-    { full_name: "ilia/dotfiles", name: "dotfiles", html_url: "https://git.levkin.ca/ilia/dotfiles", language: "", description: "Dotfiles and shell configuration for dev machines." },
-    { full_name: "ilia/hilitehero", name: "hilitehero", html_url: "https://git.levkin.ca/ilia/hilitehero", language: "Python", description: "Python tool for extracting highlighted text from PDFs with precise ordering and hyphenation handling." },
-    { full_name: "ilia/invoice", name: "invoice", html_url: "https://git.levkin.ca/ilia/invoice", language: "JavaScript", description: "CLI for generating professional PDF invoices from JSON — interactive and non-interactive modes with preview-first workflow." },
-    { full_name: "ilia/Jobber", name: "Jobber", html_url: "https://git.levkin.ca/ilia/Jobber", language: "TypeScript", description: "Self-hosted job search orchestration — discover roles, score fit, draft resumes and cover letters, export PDFs, track email; you submit applications yourself." },
-    { full_name: "ilia/kanban", name: "kanban", html_url: "https://git.levkin.ca/ilia/kanban", language: "", description: "Kanban board project on self-hosted Gitea." },
-    { full_name: "ilia/linkedout", name: "linkedout", html_url: "https://git.levkin.ca/ilia/linkedout", language: "JavaScript", description: "Job market intelligence platform with integrated AI-powered insights — modular architecture for extensibility." },
-    { full_name: "ilia/llm_council", name: "llm_council", html_url: "https://git.levkin.ca/ilia/llm_council", language: "Python", description: "Local web UI like ChatGPT but sends each query to multiple LLMs — your \"LLM council\" votes with diverse models." },
-    { full_name: "ilia/mirror_match", name: "mirror_match", html_url: "https://git.levkin.ca/ilia/mirror_match", language: "TypeScript", description: "Photo guessing game — upload photos, others guess who is in the picture for points. Next.js, PostgreSQL, NextAuth." },
-    { full_name: "ilia/nanobot", name: "nanobot", html_url: "https://git.levkin.ca/ilia/nanobot", language: "Python", description: "Ultra-lightweight personal AI assistant (Python; published on PyPI as nanobot-ai)." },
-    { full_name: "ilia/onboarding", name: "onboarding", html_url: "https://git.levkin.ca/ilia/onboarding", language: "Shell", description: "Developer environment setup — automates 60+ apps and tools plus Git and SSH configuration." },
-    { full_name: "ilia/outreach", name: "outreach", html_url: "https://git.levkin.ca/ilia/outreach", language: "JavaScript", description: "Node.js email outreach for campaigns to law firms — templates, tracking, and tests." },
-    { full_name: "ilia/POTE", name: "POTE", html_url: "https://git.levkin.ca/ilia/POTE", language: "Python", description: "Research-oriented tool for tracking and analyzing public stock trades by government officials." },
-    { full_name: "ilia/profile", name: "profile", html_url: "https://git.levkin.ca/ilia/profile", language: "TypeScript", description: "Profile / personal site — TypeScript." },
-    { full_name: "ilia/punimtag", name: "punimtag", html_url: "https://git.levkin.ca/ilia/punimtag", language: "TypeScript", description: "Modern photo management and facial recognition system." },
-    { full_name: "ilia/resume", name: "resume", html_url: "https://git.levkin.ca/ilia/resume", language: "", description: "Résumé generator based on the best-resume-ever project." }
+    { full_name: "Gitilia/playkit", name: "playkit", html_url: "https://github.com/Gitilia/playkit", language: "TypeScript", description: "Shared Playwright + API test helpers — UI actions, API client, timings, metrics." },
+    { full_name: "Gitilia/context-extractor", name: "context-extractor", html_url: "https://github.com/Gitilia/context-extractor", language: "JavaScript", description: "Browser extension + Playwright package that dumps AI-ready page markdown, console, and network noise." },
+    { full_name: "Gitilia/PaperPod", name: "PaperPod", html_url: "https://github.com/Gitilia/PaperPod", language: "Python", description: "Offline overhead video → named PDFs for Paperless (CV + OCR)." },
+    { full_name: "Gitilia/SwipeAnything", name: "SwipeAnything", html_url: "https://github.com/Gitilia/SwipeAnything", language: "TypeScript", description: "Local-first swipe-to-triage UI with pluggable adapters." },
+    { full_name: "Gitilia/maCopy", name: "maCopy", html_url: "https://github.com/Gitilia/maCopy", language: "TypeScript", description: "Native macOS menu-bar clipboard manager (Tauri + React)." },
+    { full_name: "Gitilia/slack-sieve", name: "slack-sieve", html_url: "https://github.com/Gitilia/slack-sieve", language: "Python", description: "Sieve a Slack workspace export before Mattermost import." },
+    { full_name: "Gitilia/sdetProfile", name: "sdetProfile", html_url: "https://github.com/Gitilia/sdetProfile", language: "JavaScript", description: "Career portfolio styled as a Playwright test runner." },
+    { full_name: "Gitilia/portfolio", name: "portfolio", html_url: "https://github.com/Gitilia/portfolio", language: "JavaScript", description: "Personal hub for iliadobkin.com — projects, demos, consulting lanes." },
+    { full_name: "Gitilia/levkin.ca", name: "levkin.ca", html_url: "https://github.com/Gitilia/levkin.ca", language: "HTML", description: "Levkin Inc. public homepage — static stack site." },
+    { full_name: "Gitilia/mirror_match", name: "mirror_match", html_url: "https://github.com/Gitilia/mirror_match", language: "TypeScript", description: "Photo guessing game — upload photos, others guess who is in the picture for points." },
   ]
 };
 
@@ -482,7 +473,7 @@ function renderProjects(){
         ${_tags(p.tags)}
       </div>`).join('')
   }</div>
-    <p class="projects-foot">Public code on <a href="https://git.levkin.ca/explore/repos" target="_blank" rel="noopener">git.levkin.ca</a> — open the <button type="button" class="tab-link" data-tab="network">Network</button> tab for an API-style request list.</p>
+    <p class="projects-foot">Public code on <a href="https://github.com/Gitilia" target="_blank" rel="noopener">github.com/Gitilia</a> — open the <button type="button" class="tab-link" data-tab="network">Network</button> tab for an API-style request list.</p>
   </div>`;
 }
 
@@ -537,7 +528,7 @@ function renderContact(){
   return `<div class="block"><div class="contact-grid">
     <div class="contact-cell"><label>email</label><a href="mailto:${p.email}">${p.email}</a></div>
     <div class="contact-cell"><label>linkedin</label><a href="${p.linkedin}" target="_blank" rel="noopener">in/idobkin</a></div>
-    <div class="contact-cell"><label>gitea (self-hosted)</label><a href="${p.gitea}" target="_blank" rel="noopener">git.levkin.ca</a></div>
+    <div class="contact-cell"><label>github</label><a href="${p.github || p.gitea}" target="_blank" rel="noopener">github.com/Gitilia</a></div>
     <div class="contact-cell"><label>site</label><a href="${p.site}" target="_blank" rel="noopener">sdet.levkin.ca</a></div>
     <div class="contact-cell"><label>location</label>${_esc(p.location)}${p.workAuth ? ` · ${_esc(p.workAuth)}` : ''}</div>
   </div></div>`;
@@ -552,7 +543,7 @@ function renderPerfBudget(){
 
 function renderResponseTime(){
   return `<div class="block">
-    <p>The Gitea API endpoint <code>GET /api/v1/repos/ilia/portfolio</code> exceeded the <strong>200 ms</strong> latency budget three times in a row.</p>
+    <p>The GitHub API endpoint <code>GET /repos/Gitilia/portfolio</code> exceeded the <strong>200 ms</strong> latency budget three times in a row.</p>
     <h4>What happened</h4>
     <ul>
       <li>Initial request returned in <strong>347 ms</strong> — likely a cold-start on the VPS.</li>
